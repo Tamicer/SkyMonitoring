@@ -34,7 +34,7 @@ public class NetConfig {
     public static final String HEADERS_KEY = "data_head";
 
     /** key*/
-    public static final String PARAMS_KEY = "data_block";
+    public static final String PARAMS_KEY = "data_body";
 
 
 }
