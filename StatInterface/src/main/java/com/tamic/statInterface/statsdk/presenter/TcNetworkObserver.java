@@ -16,12 +16,12 @@ import com.tamic.statInterface.statsdk.constants.StaticsConfig;
  * NetworkObserver
  * Created by Tamic.
  */
-public class PaNetworkObserver extends BroadcastReceiver {
+public class TcNetworkObserver extends BroadcastReceiver {
 
 	/** Debug mode */
 	private static final boolean DEBUG = StaticsConfig.DEBUG;
 	/** LOG Tag */
-	private static final String LOG_TAG = PaNetworkObserver.class.getSimpleName();
+	private static final String LOG_TAG = TcNetworkObserver.class.getSimpleName();
 	/** Context */
 	private Context mContext;
 	/** NetworkListener */
@@ -39,7 +39,7 @@ public class PaNetworkObserver extends BroadcastReceiver {
 	 * @param aListener
 	 *            INetworkListener
 	 */
-	public PaNetworkObserver(Context aContext, INetworkListener aListener) {
+	public TcNetworkObserver(Context aContext, INetworkListener aListener) {
 		mContext = aContext;
 		mListener = aListener;
 		mIsNetworkAvailable = false;

@@ -14,12 +14,12 @@ import com.tamic.statInterface.statsdk.util.StatLog;
  * DeblockObserver
  * Created by Tamic on 2016-04-15.
  */
-public class PaDeblockObserver extends BroadcastReceiver {
+public class TcDeblockObserver extends BroadcastReceiver {
 
 	/** DEBUG mode */
 	private static final boolean DEBUG = StaticsConfig.DEBUG;
 	/** StatLog TAG */
-	private static final String StatLog_TAG = PaDeblockObserver.class.getSimpleName();
+	private static final String StatLog_TAG = TcDeblockObserver.class.getSimpleName();
 	/** Context */
 	private Context mContext;
 	/** IKeyguardListener */
@@ -33,7 +33,7 @@ public class PaDeblockObserver extends BroadcastReceiver {
 	 * @param aListener
 	 *            IScreenListener
 	 */
-	public PaDeblockObserver(Context aContext, IKeyguardListener aListener) {
+	public TcDeblockObserver(Context aContext, IKeyguardListener aListener) {
 		mContext = aContext;
 		mListener = aListener;
 	}

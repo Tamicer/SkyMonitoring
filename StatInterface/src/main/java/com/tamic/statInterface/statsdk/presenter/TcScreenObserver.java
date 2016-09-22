@@ -1,5 +1,5 @@
 /** 
- * Filename:    PaScreenObserver.java
+ * Filename:    TcScreenObserver.java
  * Description:  
  * Copyright:   Baidu MIC Copyright(c)2011 
  * @author:     CoCoMo 
@@ -27,12 +27,12 @@ import com.tamic.statInterface.statsdk.core.TcIntentManager;
  * ScreenObserver
  * Created by Tamic. on 2016-04-15.
  */
-public class PaScreenObserver extends BroadcastReceiver {
+public class TcScreenObserver extends BroadcastReceiver {
 
 	/** DEBUG mode */
 	private static final boolean DEBUG = StaticsConfig.DEBUG;
 	/** Log TAG */
-	private static final String LOG_TAG = PaScreenObserver.class.getSimpleName();
+	private static final String LOG_TAG = TcScreenObserver.class.getSimpleName();
 
 	/** Context */
 	private Context mContext;
@@ -47,7 +47,7 @@ public class PaScreenObserver extends BroadcastReceiver {
 	 * @param aListener
 	 *            IScreenListener
 	 */
-	public PaScreenObserver(Context aContext, IScreenListener aListener) {
+	public TcScreenObserver(Context aContext, IScreenListener aListener) {
 		mContext = aContext;
 		mListener = aListener;
 	}

@@ -43,12 +43,12 @@ public final class StatLog {
 	/** 保存log开关 */
 	private static boolean mIsLogToFile = false;
 	/** folder name */
-	private static String mFolderName = Environment.getExternalStorageDirectory() + File.separator + "pinganfang"
+	private static String mFolderName = Environment.getExternalStorageDirectory() + File.separator + "TaStatSdk"
 			+ File.separator + "StatLog" + File.separator + "log" + File.separator;
 	/** log file name */
-	private static String mLogFileName = mFolderName + "haofangStat_log.txt";
+	private static String mLogFileName = mFolderName + "TamicStatStat_log.txt";
 	/** 当前log */
-	private static String mLogFileNameLogcat = mFolderName + "haofangStat_lasttime_log.txt";
+	private static String mLogFileNameLogcat = mFolderName + "TamicStat_lasttime_log.txt";
 
 	/**
 	 * LogLevel

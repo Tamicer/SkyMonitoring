@@ -8,9 +8,9 @@ import android.util.Log;
 
 import com.tamic.statInterface.statsdk.constants.StaticsConfig;
 import com.tamic.statInterface.statsdk.db.helper.DataConstruct;
-import com.tamic.statInterface.statsdk.presenter.PaDeblockObserver;
-import com.tamic.statInterface.statsdk.presenter.PaNetworkObserver;
-import com.tamic.statInterface.statsdk.presenter.PaScreenObserver;
+import com.tamic.statInterface.statsdk.presenter.TcDeblockObserver;
+import com.tamic.statInterface.statsdk.presenter.TcNetworkObserver;
+import com.tamic.statInterface.statsdk.presenter.TcScreenObserver;
 import com.tamic.statInterface.statsdk.util.StatLog;
 
 import java.util.List;
@@ -19,15 +19,15 @@ import java.util.List;
  * ObserverPresenter
  * Created by Tamic on 2016-04-14.
  */
-public class TcObserverPresenter implements PaNetworkObserver.INetworkListener, PaScreenObserver.IScreenListener,
-        PaDeblockObserver.IKeyguardListener {
+public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, TcScreenObserver.IScreenListener,
+        TcDeblockObserver.IKeyguardListener {
 
     /** NetworkObserver  */
-    private PaNetworkObserver mNetworkObserver;
+    private TcNetworkObserver mNetworkObserver;
     /** ScreenObserver */
-    private PaScreenObserver mScreenObserver;
+    private TcScreenObserver mScreenObserver;
     /** DeblockObserver */
-    private PaDeblockObserver mKeyguardObserver;
+    private TcDeblockObserver mKeyguardObserver;
     /** isForeground */
     private boolean isForeground;
     /**  isInit */
@@ -158,17 +158,17 @@ public class TcObserverPresenter implements PaNetworkObserver.INetworkListener, 
     private void registerObserver(Context aContext) {
 
         if (mScreenObserver == null) {
-            mScreenObserver = new PaScreenObserver(aContext, this);
+            mScreenObserver = new TcScreenObserver(aContext, this);
         }
         mScreenObserver.start();
 
         if (mNetworkObserver == null) {
-            mNetworkObserver = new PaNetworkObserver(aContext, this);
+            mNetworkObserver = new TcNetworkObserver(aContext, this);
         }
         mNetworkObserver.start();
 
         if (mKeyguardObserver == null) {
-            mKeyguardObserver = new PaDeblockObserver(aContext, this);
+            mKeyguardObserver = new TcDeblockObserver(aContext, this);
         }
         mKeyguardObserver.start();
     }
