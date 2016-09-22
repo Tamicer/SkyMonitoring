@@ -7,14 +7,18 @@ import com.alibaba.fastjson.JSON;
 import com.tamic.statInterface.statsdk.constants.StaticsConfig;
 import com.tamic.statInterface.statsdk.db.helper.DataConstruct;
 import com.tamic.statInterface.statsdk.db.helper.StaticsAgent;
+import com.tamic.statInterface.statsdk.model.DataBlock;
+import com.tamic.statInterface.statsdk.service.Platform;
 import com.tamic.statInterface.statsdk.util.JsonUtil;
 import com.tamic.statInterface.statsdk.util.NetworkUtil;
 import com.tamic.statInterface.statsdk.util.StatLog;
 
-import org.apache.http.util.EncodingUtils;
-
 import java.io.InputStream;
 import java.util.HashMap;
+
+import cz.msebera.android.httpclient.util.EncodingUtils;
+
+import static com.tamic.statInterface.statsdk.core.TcNetEngine.TAG;
 
 
 /**
@@ -61,12 +65,21 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
     @Override
     public void onSend() {
-        new Thread(new Runnable() {
+        // report data to server
+        Platform.get().execute(new Runnable() {
             @Override
             public void run() {
-                TcUpLoadManager.getInstance(mContext).report(JsonUtil.toJSONString(StaticsAgent.getDataBlock()));
+                DataBlock dataBlock = StaticsAgent.getDataBlock();
+
+                if (dataBlock.getApp_action().isEmpty() &&
+                        dataBlock.getEvent().isEmpty() &&
+                        dataBlock.getPage().isEmpty()) {
+                    return;
+                }
+                StatLog.d(TAG, "TcStatfacr >> report is Start");
+                TcUpLoadManager.getInstance(mContext).report(JsonUtil.toJSONString(dataBlock));
             }
-        }).start();
+        });
 
     }
 

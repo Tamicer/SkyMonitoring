@@ -7,7 +7,10 @@ import android.text.TextUtils;
 import com.tamic.statInterface.statsdk.constants.NetConfig;
 import com.tamic.statInterface.statsdk.db.helper.StaticsAgent;
 import com.tamic.statInterface.statsdk.http.TcHttpClient;
+import com.tamic.statInterface.statsdk.service.Platform;
+import com.tamic.statInterface.statsdk.util.JsonUtil;
 import com.tamic.statInterface.statsdk.util.NetworkUtil;
+import com.tamic.statInterface.statsdk.util.StatLog;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,6 +33,8 @@ public class TcUpLoadManager implements IUpLoadlistener{
     private AtomicReference<TcNetEngine> atomic;
 
     private TcNetEngine netEngine;
+    /** Log TAG */
+    private static final String TAG = TcNetEngine.class.getSimpleName();
 
     /**
      * getInstance
@@ -129,7 +134,16 @@ public class TcUpLoadManager implements IUpLoadlistener{
 
         isRunning = false;
         // delete data
-        StaticsAgent.deleteTable();
+        StatLog.d(TAG, "DELETE  ：StaticsAgent.deleteTable()");
+        // delete data
+        Platform.get().execute(new Runnable() {
+            @Override
+            public void run() {
+                StaticsAgent.deleteTable();
+                StatLog.d(TAG, "delete after :>>>>>>"+ JsonUtil.toJSONString(StaticsAgent.getDataBlock()));
+            }
+        });
+
     }
 
     @Override

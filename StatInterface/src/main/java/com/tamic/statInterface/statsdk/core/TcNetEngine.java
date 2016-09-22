@@ -35,7 +35,7 @@ public class TcNetEngine {
     /** 重试次数 */
     protected int mRetrytimes = NetConfig.RETRY_TIMES;
 
-    private static final String TAG = "TamicStat::TaNetEngine";
+    public static final String TAG = "TamicStat::TaNetEngine";
 
     /** 是否支持断点 */
     protected boolean mCanContinue;

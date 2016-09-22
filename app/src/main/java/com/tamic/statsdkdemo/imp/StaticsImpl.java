@@ -5,10 +5,10 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.tamic.statInterface.statsdk.core.StaticsListener;
 
-import org.apache.http.util.EncodingUtils;
-
 import java.io.InputStream;
 import java.util.HashMap;
+
+import cz.msebera.android.httpclient.util.EncodingUtils;
 
 /**
  * Created by Tmaic on 2016-04-13.

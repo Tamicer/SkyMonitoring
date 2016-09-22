@@ -28,10 +28,10 @@ public class StaticsConfig {
 
 
     /** 统计sdk版本号 */
-    public static final int SDK_VERSION_CODE = 1;
+    public static final int SDK_VERSION_CODE = 2;
 
     /** 统计sdk版本名称 */
-    public static final String SDK_VERSION_NAME = "1.0.0";
+    public static final String SDK_VERSION_NAME = "1.0.3";
     /** 是否是debug版本 */
     public static boolean DEBUG = true;
 }
