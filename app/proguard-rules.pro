@@ -17,6 +17,6 @@
 #}
 
 ### keep Statsdk
--keep class com.pinganfang.haofang.statsdk.db.** { *; }
+-keep class com.tamic.statInterface.statsdk.db.** { *; }
 ### keep Statsdk
--keep class com.pinganfang.haofang.statsdk.model.header** { *; }
+-keep class com.tamic.statInterface.statsdk.model.header** { *; }
