@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import com.tamic.statInterface.statsdk.constants.StaticsConfig;
+
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
@@ -15,7 +17,8 @@ import de.greenrobot.dao.internal.DaoConfig;
 */
 public class TcNoteDao extends AbstractDao<TcNote, Long> {
 
-    public static final String TABLENAME = "PA_NOTE";
+    public static final String TABLENAME = StaticsConfig.SDK_TABLE_NAME;
+
 
     /**
      * Properties of entity TcNote.<br/>
@@ -23,11 +26,10 @@ public class TcNoteDao extends AbstractDao<TcNote, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Firstcloumn = new Property(1, String.class, "firstcloumn", false, "FIRSTCLOUMN");
-        public final static Property Secondcloumn = new Property(2, String.class, "secondcloumn", false, "SECONDCLOUMN");
-        public final static Property Thirdcloumn = new Property(3, String.class, "thirdcloumn", false, "THIRDCLOUMN");
-    };
-
+        public final static Property appActionInfo = new Property(1, String.class, StaticsConfig.APPACTION_INFO, false, "FIRSTCLOUMN");
+        public final static Property pageInfo = new Property(2, String.class, StaticsConfig.PAGE_INFO, false, "SECONDCLOUMN");
+        public final static Property enventInfo = new Property(3, String.class, StaticsConfig.ENVENT_INFO, false, "THIRDCLOUMN");
+    }
 
     public TcNoteDao(DaoConfig config) {
         super(config);
@@ -40,7 +42,7 @@ public class TcNoteDao extends AbstractDao<TcNote, Long> {
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"PA_NOTE\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + TABLENAME + "(" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"FIRSTCLOUMN\" TEXT NOT NULL ," + // 1: firstcloumn
                 "\"SECONDCLOUMN\" TEXT NOT NULL ," + // 2: secondcloumn
@@ -49,7 +51,7 @@ public class TcNoteDao extends AbstractDao<TcNote, Long> {
 
     /** Drops the underlying database table. */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"PA_NOTE\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + TABLENAME;
         db.execSQL(sql);
     }
 

@@ -28,7 +28,7 @@ public class NoteDaoHelper {
 
     private DaoMaster getDaoMaster(Context context){
         if(daoMaster == null){
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "pa-db", null);
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "tamic-db", null);
             db = helper.getWritableDatabase();
             daoMaster = new DaoMaster(db);
         }

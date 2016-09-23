@@ -1,5 +1,7 @@
 package com.tamic.statInterface.statsdk.constants;
 
+import de.greenrobot.dao.Property;
+
 /**
  * StaticsConfig
  * Created by Tamic on 2016-03-30.
@@ -12,6 +14,13 @@ public class StaticsConfig {
     private StaticsConfig() {
 
     }
+
+    public static final String SDK_TABLE_NAME = "TcStats_NOTE";
+
+    public final static String APPACTION_INFO = "pageInfo";
+    public final static String PAGE_INFO = "appActionInfo";
+    public final static String ENVENT_INFO = "enventInfo";
+    public final static String CRASH_INFO = "crashInfo";
 
     /**1*/
     public static final int APP_ID_HF = 100;

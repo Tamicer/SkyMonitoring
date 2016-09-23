@@ -15,17 +15,23 @@ import com.tamic.statInterface.statsdk.util.StatLog;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- *  Stat UpLoadManager
+ * Stat UpLoadManager
  * Created by Tamic on 2016-03-24.
  */
-public class TcUpLoadManager implements IUpLoadlistener{
+public class TcUpLoadManager implements IUpLoadlistener {
 
 
-    /** context */
+    /**
+     * context
+     */
     private Context mContext;
-    /** http client */
+    /**
+     * http client
+     */
     private TcHttpClient mHttpClient;
-    /** UpLoadManager */
+    /**
+     * UpLoadManager
+     */
     private static TcUpLoadManager sInstance;
 
     private Boolean isRunning = false;
@@ -33,15 +39,16 @@ public class TcUpLoadManager implements IUpLoadlistener{
     private AtomicReference<TcNetEngine> atomic;
 
     private TcNetEngine netEngine;
-    /** Log TAG */
+    /**
+     * Log TAG
+     */
     private static final String TAG = TcNetEngine.class.getSimpleName();
 
     /**
      * getInstance
      *
-     * @param aContext
-     *            context
-     * @return  UpLoadManager
+     * @param aContext context
+     * @return UpLoadManager
      */
     public static synchronized TcUpLoadManager getInstance(Context aContext) {
         if (sInstance == null) {
@@ -53,8 +60,7 @@ public class TcUpLoadManager implements IUpLoadlistener{
     /**
      * constructor
      *
-     * @param aContext
-     *            context
+     * @param aContext context
      */
     private TcUpLoadManager(Context aContext) {
         mContext = aContext;
@@ -66,7 +72,7 @@ public class TcUpLoadManager implements IUpLoadlistener{
      */
     private void init() {
         mHttpClient = getHttpclient();
-        atomic = new AtomicReference<> ();
+        atomic = new AtomicReference<>();
         netEngine = new TcNetEngine(mContext, this);
     }
 
@@ -139,8 +145,8 @@ public class TcUpLoadManager implements IUpLoadlistener{
         Platform.get().execute(new Runnable() {
             @Override
             public void run() {
-                StaticsAgent.deleteTable();
-                StatLog.d(TAG, "delete after :>>>>>>"+ JsonUtil.toJSONString(StaticsAgent.getDataBlock()));
+                StaticsAgent.deleteData();
+                StatLog.d(TAG, "delete after :>>>>>>" + JsonUtil.toJSONString(StaticsAgent.getDataBlock()));
             }
         });
 

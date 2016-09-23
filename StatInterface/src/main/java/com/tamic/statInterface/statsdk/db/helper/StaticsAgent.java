@@ -19,113 +19,105 @@ import java.util.List;
  * Created by Tamic on 2016-03-17.
  */
 public class StaticsAgent {
-    private static NoteDaoHelper helper ;
-    private static TcNoteDao paNoteDao ;
-    private static TcNote paNote ;
+    private static NoteDaoHelper helper;
+    private static TcNoteDao noteDao;
+    private static TcNote note;
 
     /**
      * @param context
      */
-    public static void init(Context context){
+    public static void init(Context context) {
         helper = new NoteDaoHelper();
-        paNoteDao = helper.getPaNoteDao(context);
+        noteDao = helper.getPaNoteDao(context);
     }
 
     /**
      * 存储appAction相关信息
+     *
      * @param appAction
      */
-    public static void storeAppAction(String appAction){
-        if(TextUtils.isEmpty(appAction))
+    public static void storeAppAction(String appAction) {
+        if (TextUtils.isEmpty(appAction))
             throw new NullPointerException("appAction is null");
-        storePaData(appAction,"","");
+        storeData(appAction, "", "");
     }
 
     /**
      * storePage
+     *
      * @param pageString
      */
-    public static void storePage(String pageString){
-        if(TextUtils.isEmpty(pageString))
+    public static void storePage(String pageString) {
+        if (TextUtils.isEmpty(pageString))
             throw new NullPointerException("pageString is null");
-        storePaData("",pageString,"");
+        storeData("", pageString, "");
     }
 
     /**
-     *  storeEvent
+     * storeEvent
+     *
      * @param eventString
      */
-    public static void storeEvent(String eventString){
-        if(TextUtils.isEmpty(eventString))
+    public static void storeEvent(String eventString) {
+        if (TextUtils.isEmpty(eventString))
             throw new NullPointerException("eventString is null");
-        storePaData("","",eventString);
+        storeData("", "", eventString);
     }
 
-    public static DataBlock getDataBlock(){
-        DataBlock dataBlock = new DataBlock() ;
-        List<TcNote> list = paNoteDao.loadAll();
+    public static DataBlock getDataBlock() {
+        DataBlock dataBlock = new DataBlock();
+        List<TcNote> list = noteDao.loadAll();
         AppAction appAction = new AppAction();
         Page page = new Page();
         Event event = new Event();
         List<AppAction> actionList = new ArrayList<AppAction>();
         List<Page> pageList = new ArrayList<Page>();
         List<Event> eventList = new ArrayList<Event>();
-        for (int i = 0;i<list.size();i++){
-            if(!TextUtils.isEmpty(list.get(i).getFirstcloumn())){
-                appAction = (AppAction) JsonUtil.parseObject(list.get(i).getFirstcloumn(), AppAction.class);
+        for (int i = 0; i < list.size(); i++) {
+            if (!TextUtils.isEmpty(list.get(i).getFirstcloumn())) {
+                appAction = JsonUtil.parseObject(list.get(i).getFirstcloumn(), AppAction.class);
                 actionList.add(appAction);
             }
-            if(!TextUtils.isEmpty(list.get(i).getSecondcloumn())){
-                page = (Page) JsonUtil.parseObject(list.get(i).getSecondcloumn(),Page.class);
+            if (!TextUtils.isEmpty(list.get(i).getSecondcloumn())) {
+                page = JsonUtil.parseObject(list.get(i).getSecondcloumn(), Page.class);
                 pageList.add(page);
             }
-            if(!TextUtils.isEmpty(list.get(i).getThirdcloumn())){
-                event = (Event) JsonUtil.parseObject(list.get(i).getThirdcloumn(),Event.class);
+            if (!TextUtils.isEmpty(list.get(i).getThirdcloumn())) {
+                event = JsonUtil.parseObject(list.get(i).getThirdcloumn(), Event.class);
                 eventList.add(event);
             }
         }
         dataBlock.setApp_action(actionList);
         dataBlock.setPage(pageList);
         dataBlock.setEvent(eventList);
-        return dataBlock ;
+        return dataBlock;
     }
 
 
-    public static void storePaData(String firstcloumn,String secondcloumn,String thirdcloumn){
-        paNote = new TcNote(null,firstcloumn,secondcloumn,thirdcloumn);
-        if(null != helper){
-            paNoteDao.insert(paNote);
+    public static void storeData(String appActionInfo, String pageInfo, String eventInfo) {
+        note = new TcNote(null, appActionInfo, pageInfo, eventInfo);
+        if (null != helper) {
+            noteDao.insert(note);
         }
-
-        List<TcNote> list = paNoteDao.loadAll();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0;i<list.size();i++){
-            stringBuilder.append("firstcloumn:"+list.get(i).getFirstcloumn()+";");
-            stringBuilder.append("secondcloumn:"+list.get(i).getSecondcloumn()+";");
-            stringBuilder.append("thirdcloumn:"+list.get(i).getThirdcloumn()+"---");
-        }
-
     }
-
-
 
     /**
-     *storeObject
+     * storeObject
+     *
      * @param o
      */
-    public static void storeObject(Object o){
-        if(o instanceof Event){
+    public static void storeObject(Object o) {
+        if (o instanceof Event) {
             storeEvent(JSONObject.toJSONString(o));
-        }else if(o instanceof AppAction){
+        } else if (o instanceof AppAction) {
             storeAppAction(JSONObject.toJSONString(o));
-        }else if(o instanceof Page){
+        } else if (o instanceof Page) {
             storePage(JSONObject.toJSONString(o));
         }
-
     }
 
-    public static void deleteTable() {
-        paNoteDao.deleteAll();
+    public static void deleteData() {
+        noteDao.deleteAll();
     }
 
 }

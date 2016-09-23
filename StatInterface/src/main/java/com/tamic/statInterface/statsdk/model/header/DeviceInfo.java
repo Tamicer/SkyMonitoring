@@ -11,7 +11,6 @@ public class DeviceInfo {
     private String imei;
     private String android_id;
     private String mac;
-    private String td_device_id;
     private String locale;
     private String os = "Android";
     private String os_version;
@@ -74,14 +73,6 @@ public class DeviceInfo {
 
     public void setMac(String mac) {
         this.mac = mac;
-    }
-
-    public String getTd_device_id() {
-        return td_device_id;
-    }
-
-    public void setTd_device_id(String td_device_id) {
-        this.td_device_id = td_device_id;
     }
 
     public String getLocale() {

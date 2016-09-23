@@ -62,6 +62,14 @@ public class DeviceUtil {
     }
 
     /**
+     * getSdkName
+     */
+    public static String getSdkName() {
+
+        return StaticsConfig.SDK_VERSION_NAME;
+    }
+
+    /**
      *getMacAddress
      *
      * @param context

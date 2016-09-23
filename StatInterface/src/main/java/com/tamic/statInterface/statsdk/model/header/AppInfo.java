@@ -19,7 +19,9 @@ public class AppInfo {
     /**
      * 统计sdk版本号
      */
-    private int sdk_version;
+    private int sdk_version_code;
+
+    private String sdk_verson_name;
 
     /**
      * app channel
@@ -46,11 +48,11 @@ public class AppInfo {
     }
 
     public int getSdk_version() {
-        return sdk_version;
+        return sdk_version_code;
     }
 
     public void setSdk_version(int sdk_version) {
-        this.sdk_version = sdk_version;
+        this.sdk_version_code = sdk_version;
     }
 
     public String getChannel() {
@@ -59,6 +61,13 @@ public class AppInfo {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+    public String getSdk_verson_name() {
+        return sdk_verson_name;
+    }
+
+    public void setSdk_verson_name(String sdk_verson_name) {
+        this.sdk_verson_name = sdk_verson_name;
     }
 
 

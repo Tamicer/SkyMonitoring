@@ -133,7 +133,7 @@ public class DataConstruct {
      * deleteData
      */
     public static void deleteData(){
-        StaticsAgent.deleteTable();
+        StaticsAgent.deleteData();
     }
 
     /**

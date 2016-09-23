@@ -91,13 +91,13 @@ public class TcHeadrHandle {
             info = manager.getPackageInfo(context.getPackageName(), 0);
             appinfo.setApp_id(String.valueOf(appId));
 
-
             if (info != null) {
                 appinfo.setApp_version(info.versionName);
             }
             appinfo.setApp_id(String.valueOf(appId));
             appinfo.setChannel(mChannel);
             appinfo.setSdk_version(DeviceUtil.getSdkCode());
+            appinfo.setSdk_verson_name(DeviceUtil.getSdkName());
 
             return appinfo;
         }catch (PackageManager.NameNotFoundException e1) {
