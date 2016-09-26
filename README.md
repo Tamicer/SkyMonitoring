@@ -3,7 +3,7 @@
 自定义统计SDK, 完全放弃第三方平台，让app拥有自主的数据统计功能
 >支持页面统计
 >自定义事件统计
->APP启动退出统计，不同渠道统计
+>APP启动退出统计，crsah日志统计
 
 
 
@@ -84,12 +84,12 @@ APP常规数据统计
 
 
 设置上报策略的代码示例如下：
-    // 设置策略模式  第一个是策略模式   ，第二是是时间（单位/分）
+        
+        // 设置策略模式  第一个是策略模式   ，第二是是时间（单位/分）
        TcStatInterface.setUploadPolicy(TcStatInterface.UploadPolicy.UPLOAD_POLICY_INTERVA, 3);
     
     
-    
-    
+       
     
 
 API说明
@@ -99,7 +99,8 @@ API说明
      请具体看demo 注释
 
 5. 集成步骤
-4.1 依赖项目
+
+5.1 依赖项目
 
  gradle中配置依赖module, 将项目增加为自己的子模块 
 
@@ -109,26 +110,70 @@ API说明
        compile project(':StatInterface')
    }
 
- 4.2 配置Settings.gradle
+ 5.2 配置Settings.gradle
  
       include ':app' ,':StatInterface'
  
- 4.3 加入权限
+ 5.3 加入权限
+ 
   见2.1的说明。
- 4.4 初始化
+ 5.4 初始化 
+ 
+   Application的onCreate()：
+ 
+           // assets
+        String fileName = "stat_id.json";
+
+        String url = "http://www.baidu.com";
+        // init statSdk
+        TcStatInterface.initialize(this, appId, "you app chanel", fileName);
+        // set upload url
+        TcStatInterface.setUrl(url);
+           
   见2.3说明 具体见demo
   
- 4.5 其他
+ 5.5 其他
+ 
     如果你还在用Eclispe,直接用源码或者依赖jar
-    TcStatSdk_1.0.jar
+    
+    TcStatSdk_2.0.jar
+    
+ 5.6 调用
+ 
+ 
+ 
+        findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                TcStatInterface.onEvent("main", "onlick", "send data");
+                                //发送数据
+                                TcStatInterface.reportData();
+
+                        }
+
+                });
+
+                findViewById(R.id.id_button2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                                // 测试
+                                TcStatInterface.onEventParameter("onclick", "open next");
+
+                                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                                startActivity(intent);
+
+                        }
+
+                });
 
 注意
 --
-  目前服务端代码需要你自我实现，数据结结构按客户端数据Modle实现即可。
+
+  目前服务端代码需要你自我实现，数据结结构按客户端数据Model实现即可。
 
 
 
 > 作者：Tamic : http://www.jianshu.com/p/cd83e81b78aa
 
-> 统计数据存储前期：Zhangliang
-
+> crash日志：NULL
