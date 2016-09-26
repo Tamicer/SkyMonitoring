@@ -16,7 +16,7 @@ public class TcHandleThreadPool {
     private final static int MAX_POOL_SIZE = 6;
     private final static int KEEP_ALIVE_TIME = 4;
     private final Executor mExecutor;
-    private final static String THREAD_NAME ="paf-stat-thread-pool";
+    private final static String THREAD_NAME ="tamic-stat-thread-pool";
     public TcHandleThreadPool() {
 
         ThreadFactory factory = new PriorityThreadFactory(THREAD_NAME, android.os.Process.THREAD_PRIORITY_BACKGROUND);
