@@ -115,20 +115,35 @@ API说明
  
  4.3 加入权限
   见2.1的说明。
- 4.4 初始化
+ 4.4 初始化 
+ 
+   Application的onCreate()：
+ 
+           // assets
+        String fileName = "stat_id.json";
+
+        String url = "http://www.baidu.com";
+        // init statSdk
+        TcStatInterface.initialize(this, appId, "you app chanel", fileName);
+        // set upload url
+        TcStatInterface.setUrl(url);
+           
   见2.3说明 具体见demo
   
  4.5 其他
+ 
     如果你还在用Eclispe,直接用源码或者依赖jar
-    TcStatSdk_1.0.jar
+    
+    TcStatSdk_2.0.jar
 
 注意
 --
-  目前服务端代码需要你自我实现，数据结结构按客户端数据Modle实现即可。
+
+  目前服务端代码需要你自我实现，数据结结构按客户端数据Model实现即可。
 
 
 
 > 作者：Tamic : http://www.jianshu.com/p/cd83e81b78aa
 
-> 统计数据存储前期：Zhangliang
+> crash日志：NULL
 
