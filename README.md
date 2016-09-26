@@ -114,6 +114,7 @@ API说明
       include ':app' ,':StatInterface'
  
  4.3 加入权限
+ 
   见2.1的说明。
  4.4 初始化 
  
@@ -135,6 +136,35 @@ API说明
     如果你还在用Eclispe,直接用源码或者依赖jar
     
     TcStatSdk_2.0.jar
+    
+ 4.6 调用
+ 
+ 
+ 
+        findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                TcStatInterface.onEvent("main", "onlick", "send data");
+                                //发送数据
+                                TcStatInterface.reportData();
+
+                        }
+
+                });
+
+                findViewById(R.id.id_button2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                                // 测试
+                                TcStatInterface.onEventParameter("onclick", "open next");
+
+                                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                                startActivity(intent);
+
+                        }
+
+                });
 
 注意
 --
