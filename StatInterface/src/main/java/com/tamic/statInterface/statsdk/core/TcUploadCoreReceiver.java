@@ -7,6 +7,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.tamic.statInterface.statsdk.db.helper.StaticsAgent;
+import com.tamic.statInterface.statsdk.util.JsonUtil;
+
 /**
  *
  * 轮询广播
@@ -22,20 +25,12 @@ public class TcUploadCoreReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "pollSever is started");
 
-        if (context == null || intent ==null ) {
+        if (context == null || intent == null ) {
             return;
         }
 
-        if (TextUtils.equals(intent.getAction(), REPORT_ACTION)) {
-
-
-            Toast.makeText(context, "send statData", Toast.LENGTH_LONG).show();
-
-            //发送数据
-//            TcStatSdk.getInstance(context).send(JsonUtil.toJSONString(StaticsAgent.getDataBlock()));
-        }
-
-
+        //发送数据
+        TcStatSdk.getInstance(context).send();
 
     }
 }
