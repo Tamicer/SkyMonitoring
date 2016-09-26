@@ -1,14 +1,12 @@
 /*
  * DataBaseHandler.java
  *
- *  Created by: 唐俊豪 on 2014-1-9 
+ *  Created by: NULL on 2014-1-9
  *  Copyright (c) 2014年 SAIC. All rights reserved.
  */
 package com.tamic.statInterface.statsdk.db.database;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;

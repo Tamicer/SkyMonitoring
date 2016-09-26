@@ -1,7 +1,7 @@
 /*
  * DataAccess.java
  *
- *  Created by: 唐俊豪 on 2014-1-9 
+ *  Created by: NuLL on 2014-1-9
  *  Copyright (c) 2014年 SAIC. All rights reserved.
  */
 package com.tamic.statInterface.statsdk.db.database;
