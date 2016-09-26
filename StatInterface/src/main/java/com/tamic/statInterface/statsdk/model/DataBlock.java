@@ -10,6 +10,16 @@ public class DataBlock {
     private List<AppAction> app_action ;
     private List<Page> page ;
     private List<Event> event ;
+    private List<ExceptionInfo>exceptionInfos;
+
+
+    public List<ExceptionInfo> getExceptionInfos() {
+        return exceptionInfos;
+    }
+
+    public void setExceptionInfos(List<ExceptionInfo> exceptionInfos) {
+        this.exceptionInfos = exceptionInfos;
+    }
 
     public List<AppAction> getApp_action() {
         return app_action;

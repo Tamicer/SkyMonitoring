@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -126,6 +127,26 @@ public class DeviceUtil {
      */
     public static float getScreenDensity(Context context) {
         return context.getResources().getDisplayMetrics().density;
+    }
+
+    /**
+     * 获取当前手机型号
+     */
+    public static String getPhoneModel() {
+        return android.os.Build.MODEL;
+    }
+
+
+    /**
+     * 获取手机系统类型
+     */
+    public static String getSystemModel() {
+        return Build.BRAND;
+    }
+
+    /**获取手机系统版本*/
+    public static int getSystemVersion() {
+        return Build.VERSION.SDK_INT;
     }
 
 
