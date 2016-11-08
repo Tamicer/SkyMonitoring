@@ -102,17 +102,24 @@ API说明
 
 5.1 依赖项目
 
- gradle中配置依赖module, 将项目增加为自己的子模块 
+ 
+  **Gradle:**  
 
- 
-    dependencies {
- 
-       compile project(':StatInterface')
-   }
+root：
 
- 5.2 配置Settings.gradle
+      repositories {
+    maven { url "https://jitpack.io" }
+    jcenter()
+      }
+
+Module:
+
+       dependencies {
+    .....
+       compile 'com.tamic:StatInterface:2.0'
+    
+       }
  
-      include ':app' ,':StatInterface'
  
  5.3 加入权限
  
