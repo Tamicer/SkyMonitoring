@@ -177,10 +177,12 @@ Module:
 注意
 --
 
-  目前服务端代码需要你自我实现，数据结结构按客户端数据Model实现即可。
+  目前服务端代码需要你自我实现，数据结结构按客户端数据Model实现即可。收到数据落地到数据库，需要查看的即可查看，如果有可视化界面，那么更好不过。
 
 
 
-> 作者：Tamic : http://www.jianshu.com/p/cd83e81b78aa
 
->      crash日志：@jianglei0716
+> 作者：
+>       [@Tamic](https://github.com/Jianglei0716) : http://www.jianshu.com/p/cd83e81b78aa
+
+>crash：[@jianglei0716](https://github.com/Jianglei0716)
