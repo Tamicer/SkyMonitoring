@@ -183,4 +183,4 @@ Module:
 
 > 作者：Tamic : http://www.jianshu.com/p/cd83e81b78aa
 
-> crash日志：jianglei0716
+>      crash日志：@jianglei0716
