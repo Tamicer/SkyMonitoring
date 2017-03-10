@@ -37,8 +37,7 @@ public class StaticsAgent {
     }
 
     /**
-     * 存储appAction相关信息
-     *
+     * storeAppAction
      * @param appAction
      */
     public static void storeAppAction(String appAction) {
@@ -87,9 +86,9 @@ public class StaticsAgent {
         Page page = new Page();
         Event event = new Event();
         ExceptionInfo exceptionInfo = new ExceptionInfo();
-        List<AppAction> actionList = new ArrayList<AppAction>();
-        List<Page> pageList = new ArrayList<Page>();
-        List<Event> eventList = new ArrayList<Event>();
+        List<AppAction> actionList = new ArrayList<>();
+        List<Page> pageList = new ArrayList<>();
+        List<Event> eventList = new ArrayList<>();
         List<ExceptionInfo> exceptionInfos = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (!TextUtils.isEmpty(list.get(i).getFirstCloumn())) {
@@ -144,9 +143,10 @@ public class StaticsAgent {
 
     }
 
-    public static void deleteData() {
+    public static synchronized void  deleteData() {
         WriteDataBaseAccess.shareInstance(mContext).deleteAllNote();
     }
+
 
 }
 

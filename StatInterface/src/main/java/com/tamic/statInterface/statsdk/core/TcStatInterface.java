@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.tamic.statInterface.statsdk.constants.NetConfig;
 
+import java.util.HashMap;
+
 
 /**
  * StatInterface
@@ -229,6 +231,10 @@ public final class TcStatInterface {
         initEvent(eventName);
         onEventParameter(k, v);
 
+    }
+
+    public static void onEvent(String eventName, HashMap<String, String> parameters) {
+        TcStatSdk.getInstance(context).onEvent(eventName, parameters);
     }
 
 }

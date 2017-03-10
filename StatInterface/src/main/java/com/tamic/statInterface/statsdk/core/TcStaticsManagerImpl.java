@@ -1,3 +1,20 @@
+/*
+ *    Copyright (C) 2016 Tamic
+ *
+ *    link :https://github.com/Tamicer
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package com.tamic.statInterface.statsdk.core;
 
 import android.content.Context;
@@ -88,7 +105,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
     @Override
     public void onStore() {
-        DataConstruct.storeEvent();
+        DataConstruct.storeEvents();
         DataConstruct.storePage();
     }
 
@@ -112,7 +129,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
     @Override
     public void onRrecordPageEnd() {
-        DataConstruct.storeEvent();
+        DataConstruct.storeEvents();
         DataConstruct.storePage();
         if (paObserverPresenter != null) {
             paObserverPresenter.onStop(mContext);
@@ -127,9 +144,8 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
             return;
         }
 
-        //开始计时
+        //startSchedule
         startSchedule();
-
 
         String pageId = checkValidId(context.getClass().getSimpleName());
         if (pageId == null) {
@@ -162,30 +178,28 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
     @Override
     public void onInitPage(String... strings) {
-
         DataConstruct.initPage(mContext, eventInterface, strings[0], strings[1]);
-
     }
 
     @Override
     public void onPageParameter(String... strings) {
-
         DataConstruct.initPageParameter(strings[0], strings[1]);
-
     }
 
 
     @Override
     public void onInitEvent(String eventName) {
-
         DataConstruct.initEvent(eventInterface, eventName);
     }
 
     @Override
     public void onEventParameter(String... strings) {
-
         DataConstruct.onEvent(strings[0], strings[1]);
+    }
 
+    @Override
+    public void onEvent(String eventName, HashMap<String, String> parameters) {
+        DataConstruct.initEvent(this.eventInterface, eventName, parameters);
     }
 
     /**
@@ -193,11 +207,9 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
      */
     private boolean initHeader(int appId, String channel) {
 
-
         if (!TcHeadrHandle.isInit()) {
             return TcHeadrHandle.initHeader(mContext, appId, channel);
         }
-
         return false;
 
     }
@@ -208,7 +220,6 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
     void onScheduleTimeOut() {
 
         StatLog.d(LOG_TAG, "onScheduleTimeOut  is sendData");
-
         onSend();
     }
 
@@ -227,7 +238,6 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
             } else {
                 statiPollMgr.start(TcStatInterface.UPLOAD_TIME_THIRTY * 60 *1000);
             }
-
         }
     }
 
@@ -278,7 +288,6 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
     @Override
     public void onStop() {
-
         stopSchedule();
     }
 
@@ -292,7 +301,6 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
 
     public HashMap<String, String> getStatIdMaps(String jsonName) {
-
 
         HashMap<String, String> map = null;
         if (getFromAsset(jsonName) != null) {
