@@ -110,17 +110,16 @@ API说明
 root：
 
       repositories {
-    maven { url "https://jitpack.io" }
-    jcenter()
+          maven { url "https://jitpack.io" }
+          jcenter()
       }
 
 Module:
 
-       dependencies {
-    .....
-       compile 'com.tamic:StatInterface:2.1'
+         dependencies {
+          compile 'com.tamic:StatInterface:2.1'
     
-       }
+        }
  
  
  5.3 加入权限
@@ -150,12 +149,12 @@ Module:
 1.   App启动
 
 
-    TcStatInterface.recordAppStart();
+         TcStatInterface.recordAppStart();
 
 2.   App退出  
 
      
-      TcStatInterface.recordAppEnd();
+         TcStatInterface.recordAppEnd();
 
 3.   APP唤醒
 
