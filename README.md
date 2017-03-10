@@ -167,7 +167,7 @@ Module:
  
    记录某个动作，并包含事件参数时，
  
-    
+    ```
                 findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -197,6 +197,7 @@ Module:
                         }
 
                 });
+         ```
  
  
  
@@ -205,21 +206,23 @@ Module:
   
   统计activity启动时间，从哪个地方跳过来，业务开发者可以自己写一个base,让其他activity继承Base就行，就可完成自动搜集功能
         
-        
+    ``` 
       public class BaseActivity extends Activity {
     
        @override
        protected void onResume() {
         super.onResume();
         //可以直接传this
-        PaStatInterface.recordPageStart(“ID”);
+        TcStatInterface.recordPageStart(“ID”);
       }
   
        protected void onPause() {
          super.onPause();
-          PaStatInterface.recordPageEnd();
+          TcStatInterface.recordPageEnd();
        }
      }
+     
+     ```
 
 注意
 --
