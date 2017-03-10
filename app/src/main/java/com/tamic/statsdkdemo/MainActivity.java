@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.tamic.statInterface.statsdk.core.TcStatInterface;
 
+import java.util.HashMap;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -29,7 +31,11 @@ public class MainActivity extends BaseActivity {
                         public void onClick(View v) {
 
                                 // test
-                                TcStatInterface.onEventParameter("onclick", "open next");
+                                HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("id1", "xxx");
+                                map.put("id2", "yyyy");
+
+                                TcStatInterface.onEvent("open next", map);
 
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                                 startActivity(intent);
