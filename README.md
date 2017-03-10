@@ -116,7 +116,7 @@ Module:
 
        dependencies {
     .....
-       compile 'com.tamic:StatInterface:2.0'
+       compile 'com.tamic:StatInterface:2.1'
     
        }
  
@@ -165,7 +165,11 @@ Module:
                         public void onClick(View v) {
 
                                 // 测试
-                                TcStatInterface.onEventParameter("onclick", "open next");
+                                 HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("id1", "xxx");
+                                map.put("id2", "yyyy");
+
+                                TcStatInterface.onEvent("main", map);
 
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                                 startActivity(intent);
