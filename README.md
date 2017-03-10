@@ -126,52 +126,71 @@ Module:
  5.3 加入权限
  
   见2.1的说明。
+  
  5.4 初始化 
  
-   Application的onCreate()：
+         Application的onCreate()：
  
-           // assets
+         // assets
         String fileName = "stat_id.json";
 
         String url = "http://www.baidu.com";
+        
         // init statSdk
         TcStatInterface.initialize(this, appId, "you app chanel", fileName);
         // set upload url
         TcStatInterface.setUrl(url);
            
-  见2.3说明 具体见demo
-  
- 5.5 其他
+   见Wiki说明 参见demo
+   
+ 5.5 AppAction
  
-    如果你还在用Eclispe,直接用源码或者依赖jar
+ 此统计包含是三个类型
+
+1.   App启动
+
+
+    TcStatInterface.recordAppStart();
+
+2.   App退出  
+
+     
+      TcStatInterface.recordAppEnd();
+
+3.   APP唤醒
+
+    无需开发者上层使用，sdk会自动打点记录
+
+
+
+     
+ 5.6 事件统计
+ 
+   记录某个动作，并包含事件参数时，
+ 
     
-    TcStatSdk_2.0.jar
-    
- 5.6 调用
- 
- 
- 
-        findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                                 TcStatInterface.onEvent("main", "onlick", "send data");
-                                //发送数据
+                                //reportData
                                 TcStatInterface.reportData();
 
                         }
 
                 });
 
+
                 findViewById(R.id.id_button2).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                                // 测试
-                                 HashMap<String, String> map = new HashMap<String, String>();
+                                // test
+                                HashMap<String, Stringmap = new HashMap<S>();
                                 map.put("id1", "xxx");
                                 map.put("id2", "yyyy");
 
-                                TcStatInterface.onEvent("main", map);
+                                TcStatInterface.onEvent("openNext", map);
 
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                                 startActivity(intent);
@@ -179,6 +198,29 @@ Module:
                         }
 
                 });
+ 
+ 
+ 
+  5.7 Activity统计
+  
+  
+  统计activity启动时间，从哪个地方跳过来，业务开发者可以自己写一个base,让其他activity继承Base就行，就可完成自动搜集功能
+        
+        
+      public class BaseActivity extends Activity {
+    
+       @override
+       protected void onResume() {
+        super.onResume();
+        //可以直接传this
+        PaStatInterface.recordPageStart(“ID”);
+      }
+  
+       protected void onPause() {
+         super.onPause();
+          PaStatInterface.recordPageEnd();
+       }
+     }
 
 注意
 --
