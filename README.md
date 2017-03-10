@@ -168,7 +168,7 @@ Module:
  
    记录某个动作，并包含事件参数时，
  
-    ```
+    
                 findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -186,9 +186,9 @@ Module:
                         public void onClick(View v) {
 
                                 // test
-                                HashMap<String, Stringmap = new HashMap<S>();
+                                HashMap<String, String> map = new HashMap<>();
                                 map.put("id1", "xxx");
-                                map.put("id2", "yyyy");
+                                map.put("id2", "yyy");
 
                                 TcStatInterface.onEvent("openNext", map);
 
@@ -198,7 +198,7 @@ Module:
                         }
 
                 });
-         ```
+         
  
  
  
@@ -223,7 +223,7 @@ Module:
        }
      }
      
-     ```
+     
 
 注意
 --
