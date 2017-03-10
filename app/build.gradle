@@ -19,8 +19,7 @@ release {
 }
 }
 
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':StatInterface')
+    compile 'com.tamic:StatInterface:2.1'
 }
