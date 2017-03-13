@@ -211,21 +211,21 @@ Module:
   
   统计activity启动时间，从哪个地方跳过来，业务开发者可以自己写一个base,让其他activity继承Base就行，就可完成自动搜集功能
         
-    ``` 
-      public class BaseActivity extends Activity {
     
-       @override
-       protected void onResume() {
-        super.onResume();
-        //可以直接传this
-        TcStatInterface.recordPageStart(“ID”);
-      }
+       public class BaseActivity extends Activity {
+    
+        @override
+        protected void onResume() {
+          super.onResume();
+          //可以直接传this
+          TcStatInterface.recordPageStart(“ID”);
+        }
   
-       protected void onPause() {
-         super.onPause();
-          TcStatInterface.recordPageEnd();
+         protected void onPause() {
+           super.onPause();
+            TcStatInterface.recordPageEnd();
+         }
        }
-     }
      
      
 
