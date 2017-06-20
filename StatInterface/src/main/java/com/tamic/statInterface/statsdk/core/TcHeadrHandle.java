@@ -1,10 +1,12 @@
 package com.tamic.statInterface.statsdk.core;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -35,7 +37,7 @@ public class TcHeadrHandle {
 
     private static HeaderInfo headerInfo;
 
-    private static boolean isInit ;
+    private static boolean isInit;
 
     private static int appId;
 
@@ -47,7 +49,7 @@ public class TcHeadrHandle {
 
         if (headerInfo == null) {
             appId = AppId;
-            mChannel= channel;
+            mChannel = channel;
             networkinfo = new NetworkInfo();
             headerInfo = new HeaderInfo(getAppInfo(context), getDeviceInfo(context), getNetWorkInfo(context));
             isInit = true;
@@ -100,8 +102,8 @@ public class TcHeadrHandle {
             appinfo.setSdk_verson_name(DeviceUtil.getSdkName());
 
             return appinfo;
-        }catch (PackageManager.NameNotFoundException e1) {
-                e1.printStackTrace();
+        } catch (PackageManager.NameNotFoundException e1) {
+            e1.printStackTrace();
             return null;
         }
     }
@@ -176,12 +178,12 @@ public class TcHeadrHandle {
 
         networkinfo.setWifi_ind(NetworkUtil.isWifi(context));
 
-        if(mTelephonyMgr.getSimState() == TelephonyManager.SIM_STATE_READY) {
+        if (mTelephonyMgr.getSimState() == TelephonyManager.SIM_STATE_READY) {
             networkinfo.setCarrier(mTelephonyMgr.getSimOperatorName());
         }
 
         Location location = getLocation(context);
-        if(location != null){
+        if (location != null) {
             networkinfo.setLatitude(String.valueOf(location.getLatitude()));
             networkinfo.setLongitude(String.valueOf(location.getLongitude()));
         }
@@ -208,8 +210,24 @@ public class TcHeadrHandle {
             locationProvider = LocationManager.NETWORK_PROVIDER;
         } else {
 
-            locationProvider = LocationManager.GPS_PROVIDER;;
+            locationProvider = LocationManager.GPS_PROVIDER;
+
         }
+
+        if (Build.VERSION.SDK_INT > 23) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return locationManager.getLastKnownLocation(locationProvider);
+            }
+        }
+
         return locationManager.getLastKnownLocation(locationProvider);
     }
 

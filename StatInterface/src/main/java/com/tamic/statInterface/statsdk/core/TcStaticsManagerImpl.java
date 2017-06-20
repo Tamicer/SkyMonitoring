@@ -40,7 +40,8 @@ import static com.tamic.statInterface.statsdk.core.TcNetEngine.TAG;
 
 /**
  * StaticsManagerImpl core
- * Created by LIUYONGKUI726 on 2016-03-24.
+ * Created by Tamic on 2016-03-24.
+ * #{https://github.com/Tamicer/SkyMonitoring}
  */
 public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresenter.ScheduleListener {
     /** context */
@@ -304,7 +305,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
         HashMap<String, String> map = null;
         if (getFromAsset(jsonName) != null) {
-            map = (HashMap<String, String>) JSON.parseObject(getFromAsset("stat_id.json"), HashMap.class);
+            map = (HashMap<String, String>) JSON.parseObject(getFromAsset(jsonName), HashMap.class);
         }
         return map;
     }

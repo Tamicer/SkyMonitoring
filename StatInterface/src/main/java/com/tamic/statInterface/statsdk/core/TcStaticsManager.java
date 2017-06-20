@@ -24,6 +24,7 @@ import java.util.HashMap;
 /**
  * Created by Tamic on 2016-04-05.
  * StaticsManager
+ * #{https://github.com/Tamicer/SkyMonitoring}
  */
 public interface TcStaticsManager {
 

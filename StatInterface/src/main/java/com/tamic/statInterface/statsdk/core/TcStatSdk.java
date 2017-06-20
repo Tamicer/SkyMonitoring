@@ -25,6 +25,7 @@ import java.util.HashMap;
 /**
  * StatSdk
  * Created by Tamic on 2016-04-05.
+ * {https://github.com/Tamicer/SkyMonitoring}
  */
 public class TcStatSdk {
 
