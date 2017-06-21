@@ -3,9 +3,13 @@
 自定义统计SDK, 完全放弃第三方平台，让app拥有自主的数据统计功能
 
 >支持Activity统计
+
 >自定义事件统计
+
 >APP启动退出唤醒自动统计
+
 >crsah日志统计
+
 
 
 
@@ -18,13 +22,13 @@
 
 SDK所有的接口都封装在TcStatInterface抽象类的静态方法中，主要功能接口请参考第3节API说明。应用在启动时，需要调用initialize方法来初始化统计服务，之后便可按照统计的业务需求，调用统计数据上报接口上报统计打点。
 SDK提供了接口给开发者来设置向统计统计服务器上报统计数据的策略，开发者可以在任意时候调用修改策略。客户端SDK上报的数据包括默认事件统计、应用全局(AppAction)统计（用于统计app的唤醒、打开关闭频率、使用时长等）、页面访问统计(Page)和自定义事件统计(Event)。
-统计SDK提供app的崩溃日志收集功能（统计SDK2.0 将会新增）。功能开启后，对于app在使用过程中的崩溃，SDK将自动采集崩溃日志，并上传到统计后台；统计后台会根据app版本，对崩溃进行聚合、展示。开发者可以根据app实际情况情况，将该崩溃标记成已处理或者忽略状态。
+统计SDK提供app的崩溃日志收集功能（统计SDK2.0 将会新增）。功能开启后，对于app在使用过程中的崩溃，SDK将自动采集崩溃日志，并上传到统计后台；统计后台会根据app版本，对崩溃进行聚合、展示。
 
 SDK使用配置
 ----
 
 
-本节主要介绍使用好房统计SDK前的准备工作，开发者也可以参照SDK中的demo来配置。
+本节主要介绍使用统计SDK前的准备工作，开发者也可以参照SDK中的demo来配置。
 
 2.1.  配置AndroidManifest.xml文件
 SDK支持的最低安卓版本为2.2。
@@ -93,14 +97,15 @@ APP常规数据统计
     
        
     
-
-API说明
+## API说明
 --
  
 4.1. API细节
-     请具体看demo 注释
+  
+  请具体看demo 注释
+  
 
-5. 集成步骤
+## 集成步骤
 
 5.1 依赖项目
 
@@ -110,68 +115,86 @@ API说明
 root：
 
       repositories {
-    maven { url "https://jitpack.io" }
-    jcenter()
+          maven { url "https://jitpack.io" }
+          jcenter()
       }
 
 Module:
 
-       dependencies {
-    .....
-       compile 'com.tamic:StatInterface:2.1'
+         dependencies {
+          compile 'com.tamic:StatInterface:2.1'
     
-       }
+        }
  
  
- 5.3 加入权限
+5.3 加入权限
  
   见2.1的说明。
- 5.4 初始化 
+  
+5.4 初始化 
  
-   Application的onCreate()：
+         Application的onCreate()：
  
-           // assets
+         // assets
         String fileName = "stat_id.json";
 
         String url = "http://www.baidu.com";
+        
         // init statSdk
         TcStatInterface.initialize(this, appId, "you app chanel", fileName);
         // set upload url
         TcStatInterface.setUrl(url);
            
-  见2.3说明 具体见demo
-  
- 5.5 其他
+   见Wiki说明 参见demo
+   
+5.5 AppAction
  
-    如果你还在用Eclispe,直接用源码或者依赖jar
+ 此统计包含是三个类型
+
+1.   App启动
+
+
+         TcStatInterface.recordAppStart();
+
+2.   App退出  
+
+     
+         TcStatInterface.recordAppEnd();
+
+3.   APP唤醒
+
+    无需开发者上层使用，sdk会自动打点记录
+
+
+
+     
+5.6 事件统计
+ 
+   记录某个动作，并包含事件参数时，
+ 
     
-    TcStatSdk_2.0.jar
-    
- 5.6 调用
- 
- 
- 
-        findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.id_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                                 TcStatInterface.onEvent("main", "onlick", "send data");
-                                //发送数据
+                                //reportData
                                 TcStatInterface.reportData();
 
                         }
 
                 });
 
+
                 findViewById(R.id.id_button2).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                                // 测试
-                                 HashMap<String, String> map = new HashMap<String, String>();
+                                // test
+                                HashMap<String, String> map = new HashMap<>();
                                 map.put("id1", "xxx");
-                                map.put("id2", "yyyy");
+                                map.put("id2", "yyy");
 
-                                TcStatInterface.onEvent("main", map);
+                                TcStatInterface.onEvent("openNext", map);
 
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                                 startActivity(intent);
@@ -179,15 +202,41 @@ Module:
                         }
 
                 });
+         
+ 
+ 
+ 
+5.7 Activity统计
+  
+  
+  统计activity启动时间，从哪个地方跳过来，业务开发者可以自己写一个base,让其他activity继承Base就行，就可完成自动搜集功能
+        
+    
+       public class BaseActivity extends Activity {
+    
+        @override
+        protected void onResume() {
+          super.onResume();
+          //可以直接传this
+          TcStatInterface.recordPageStart(“ID”);
+        }
+  
+         protected void onPause() {
+           super.onPause();
+            TcStatInterface.recordPageEnd();
+         }
+       }
+     
+     
 
 注意
 --
 
   目前服务端代码需要你自我实现，数据结结构按客户端数据Model实现即可。收到数据落地到数据库，需要查看的时候即可查看，如果后端有可视化界面，那么更好不过。
-
-
-
-
+  
+  客户端：搜集，存储，上报。
+  服务端：接受数据，落地数据库，最后做大数据处理。
+  
 > 作者：
 >  FramWork [@Tamic](https://github.com/Jianglei0716) : http://www.jianshu.com/p/cd83e81b78aa
 
