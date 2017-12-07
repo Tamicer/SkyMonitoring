@@ -1,5 +1,5 @@
 # Sky Monitoring 天眼
-#Android StaticFrameWork
+# Android StaticFrameWork
 自定义统计SDK, 完全放弃第三方平台，让app拥有自主的数据统计功能
 
 >支持Activity统计
@@ -133,7 +133,7 @@ Module:
   
 5.4 初始化 
  
-         Application的onCreate()：
+ Application的onCreate()：
  
          // assets
         String fileName = "stat_id.json";
@@ -238,6 +238,6 @@ Module:
   服务端：接受数据，落地数据库，最后做大数据处理。
   
 > 作者：
->  FramWork [@Tamic](https://github.com/Jianglei0716) : http://www.jianshu.com/p/cd83e81b78aa
+>  FrameWork [@Tamic](https://github.com/Jianglei0716) : http://www.jianshu.com/p/cd83e81b78aa
 
 >crash：[@jianglei0716](https://github.com/Jianglei0716)
