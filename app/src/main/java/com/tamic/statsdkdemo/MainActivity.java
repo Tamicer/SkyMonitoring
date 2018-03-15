@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.*;
 import android.view.View;
 
-import com.tamic.statInterface.statsdk.core.TcStatInterface;
+import com.tamic.statinterface.stats.core.TcStatInterface;
 
 import java.util.HashMap;
 

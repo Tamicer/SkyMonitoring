@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TcSdk_Demo</string>
+    <string name="app_name">TcSdk</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

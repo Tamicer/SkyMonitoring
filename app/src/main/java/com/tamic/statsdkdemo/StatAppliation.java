@@ -1,7 +1,7 @@
 package com.tamic.statsdkdemo;
 import android.app.Application;
 
-import com.tamic.statInterface.statsdk.core.TcStatInterface;
+import com.tamic.statinterface.stats.core.TcStatInterface;
 
 /**
  * Created by LIUYONGKUI726 on 2016-04-13.

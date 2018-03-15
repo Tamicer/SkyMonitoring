@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/D:/MY/TaStatSdk/StatInterface/build/intermediates/bundles/debug/res/values/values.xml -->
-    <eat-comment/>
-    <string name="app_name">statLibrary</string>
-</resources>

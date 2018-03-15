@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tamic.statInterface.statsdk">
+    package="com.tamic.statinterface.stats">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -11,15 +11,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <receiver android:name=".core.TcUploadCoreReceiver"
-            android:process="statCore">
+        <receiver android:name="com.tamic.statinterface.stats.core.TcUploadCoreReceiver"
+            >
            <intent-filter>
                <action android:name="action.com.pinganfang.base.send_report" />
                <action android:name="android.intent.action.BOOT_COMPLETED" />

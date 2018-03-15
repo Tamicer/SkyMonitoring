@@ -2,7 +2,8 @@ package com.tamic.statsdkdemo;
 
 import android.app.Activity;
 
-import com.tamic.statInterface.statsdk.core.TcStatInterface;
+import com.tamic.statinterface.stats.core.TcStatInterface;
+
 
 /**
  * Created by Tamic on 2016-03-17.
@@ -19,7 +20,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
         TcStatInterface.recordPageEnd();
     }
 
@@ -31,10 +31,6 @@ public abstract class BaseActivity extends Activity {
         TcStatInterface.recordAppEnd();
 
     }
-
-
-
-
 
 
 }
