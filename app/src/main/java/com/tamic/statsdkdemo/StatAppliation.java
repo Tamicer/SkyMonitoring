@@ -14,16 +14,16 @@ public class StatAppliation extends Application {
         // you app id
         int appId = 21212;
         // assets
+//        String fileName = "";
         String fileName = "stat_id.json";
-
-        String url = "http://www.baidu.com";
         // init statSdk
-        TcStatInterface.initialize(this, appId, "you app chanel", fileName);
+        TcStatInterface.initialize(this, appId, "zuber", fileName);
         // set upload url
-        TcStatInterface.setUrl(url);
+        TcStatInterface.setUrl("/uploadAction");
         // Set loadPolicy
-        TcStatInterface.setUploadPolicy(TcStatInterface.UploadPolicy.UPLOAD_POLICY_DEVELOPMENT, TcStatInterface.UPLOAD_TIME_ONE);
-    }
+        TcStatInterface.setUploadPolicy(TcStatInterface.UploadPolicy.UPLOAD_POLICY_REALTIME, TcStatInterface.UPLOAD_TIME_ONE);
 
+        TcStatInterface.recordAppStart();
+    }
 
 }

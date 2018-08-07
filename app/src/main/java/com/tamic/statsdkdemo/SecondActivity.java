@@ -25,11 +25,6 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     public void onClick(View v) {

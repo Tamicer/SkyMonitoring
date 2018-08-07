@@ -38,3 +38,9 @@ captures/
 
 # Keystore files
 *.jks
+.idea/caches/
+.idea/markdown-navigator/
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/serialmonitor_settings.xml
+/build

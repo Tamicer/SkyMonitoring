@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
 
                                 TcStatInterface.onEvent("main", map);
                                 //发送数据
-                                TcStatInterface.reportData();
+//                                TcStatInterface.reportData();
 
                         }
 
