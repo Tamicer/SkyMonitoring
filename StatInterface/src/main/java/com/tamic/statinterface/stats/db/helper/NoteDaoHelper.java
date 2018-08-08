@@ -3,7 +3,7 @@ package com.tamic.statinterface.stats.db.helper;
 import android.content.Context;
 
 
-import com.tamic.statinterface.stats.db.TcNote;
+import com.tamic.statinterface.stats.bean.TcNote;
 import com.tamic.statinterface.stats.db.database.DataAccess;
 import com.tamic.statinterface.stats.db.database.ReadDataBaseAccess;
 import com.tamic.statinterface.stats.db.database.WriteDataBaseAccess;

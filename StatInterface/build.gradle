@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 //apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.jfrog.bintray'
 
 version = "2.4"
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -21,10 +22,17 @@ android {
     }
 }
 
+greendao {
+    targetGenDir 'src/main/java'
+    schemaVersion 1
+    daoPackage 'com.tamic.statinterface.stats.db'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.alibaba:fastjson:1.2.8'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'org.greenrobot:greendao:3.2.2'
 }
 
 def siteUrl = 'https://github.com/NeglectedByBoss/TcStatInterface'

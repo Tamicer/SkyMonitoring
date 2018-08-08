@@ -11,7 +11,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.tamic.statinterface.stats.db.TcNote;
+import com.tamic.statinterface.stats.bean.TcNote;
 
 import java.util.List;
 

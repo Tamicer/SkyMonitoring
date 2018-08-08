@@ -8,9 +8,8 @@ package com.tamic.statinterface.stats.db.database;
 
 import android.content.Context;
 
-import com.tamic.statinterface.stats.db.TcNote;
+import com.tamic.statinterface.stats.bean.TcNote;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*

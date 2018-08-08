@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tamic.statinterface.stats.db.TcNote;
+import com.tamic.statinterface.stats.bean.TcNote;
 import com.tamic.statinterface.stats.db.database.ReadDataBaseAccess;
 import com.tamic.statinterface.stats.db.database.WriteDataBaseAccess;
 import com.tamic.statinterface.stats.model.AppAction;

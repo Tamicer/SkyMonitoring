@@ -10,7 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.tamic.statinterface.stats.db.TcNote;
+import com.tamic.statinterface.stats.bean.TcNote;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,10 @@
 package com.tamic.statsdkdemo;
+
 import android.app.Application;
 
 import com.tamic.statinterface.stats.core.TcStatInterface;
+import com.tamic.statinterface.stats.db.DbManager;
+
 
 /**
  * Created by LIUYONGKUI726 on 2016-04-13.
@@ -11,6 +14,9 @@ public class StatAppliation extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        DbManager.getInstance().init(this);
+
         // you app id
         int appId = 21212;
         // assets
