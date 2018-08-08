@@ -10,20 +10,20 @@ import org.greenrobot.greendao.annotation.Generated;
  * Entity mapped to table "CUSTOMER".
  */
 @Entity
-public class Customer {
+public class DeviceUser {
     @Id
     private Long id;
     /**
      * Not-null value.
      */
     private String name;
-    @Generated(hash = 855149052)
-    public Customer(Long id, String name) {
+    @Generated(hash = 938495136)
+    public DeviceUser(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-    @Generated(hash = 60841032)
-    public Customer() {
+    @Generated(hash = 846503461)
+    public DeviceUser() {
     }
     public Long getId() {
         return this.id;
