@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.model.header;
+package com.tamic.statinterface.stats.bean.header;
 
 /**
  * NetworkInfo
@@ -6,10 +6,8 @@ package com.tamic.statinterface.stats.model.header;
  */
 public class NetworkInfo {
 
-    //operator
-    private String carrier;
     //is wifi
-    private Boolean wifi_ind;
+    private Boolean wifi;
     //IP
     private String ip_addr;
     //latitude
@@ -21,13 +19,6 @@ public class NetworkInfo {
     public NetworkInfo() {
     }
 
-    public String getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(String carrier) {
-        this.carrier = carrier;
-    }
 
     public String getLongitude() {
         return longitude;
@@ -45,12 +36,12 @@ public class NetworkInfo {
         this.ip_addr = ip_addr;
     }
 
-    public Boolean getWifi_ind() {
-        return wifi_ind;
+    public Boolean getWifi() {
+        return wifi;
     }
 
-    public void setWifi_ind(Boolean wifi_ind) {
-        this.wifi_ind = wifi_ind;
+    public void setWifi(Boolean wifi) {
+        this.wifi = wifi;
     }
 
     public String getLatitude() {

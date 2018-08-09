@@ -1,6 +1,5 @@
 package com.tamic.statinterface.stats.db.helper;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -9,14 +8,14 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.tamic.statinterface.stats.model.TcNoteModel;
 import com.tamic.statinterface.stats.bean.TcNote;
-import com.tamic.statinterface.stats.db.database.ReadDataBaseAccess;
-import com.tamic.statinterface.stats.db.database.WriteDataBaseAccess;
-import com.tamic.statinterface.stats.model.AppAction;
-import com.tamic.statinterface.stats.model.DataBlock;
-import com.tamic.statinterface.stats.model.Event;
-import com.tamic.statinterface.stats.model.ExceptionInfo;
-import com.tamic.statinterface.stats.model.Page;
+import com.tamic.statinterface.stats.db.DbManager;
+import com.tamic.statinterface.stats.bean.AppAction;
+import com.tamic.statinterface.stats.bean.DataBlock;
+import com.tamic.statinterface.stats.bean.Event;
+import com.tamic.statinterface.stats.bean.ExceptionInfo;
+import com.tamic.statinterface.stats.bean.Page;
 import com.tamic.statinterface.stats.util.JsonUtil;
 
 import java.util.ArrayList;
@@ -31,9 +30,7 @@ public class StaticsAgent {
     private static final String TAG = StaticsAgent.class.getSimpleName();
     private static final boolean debug = true;
 
-    private static Context mContext;
-    private static TcNote note;
-    private static NoteDaoHelper helper;
+    private static TcNoteModel tcNoteDao;
     private static DaoThread daoThread;
 
     private static final int MSG_TYPE_LOAD = 1;
@@ -44,7 +41,6 @@ public class StaticsAgent {
     /* */
 
     /**
-     * @param context
      *//*
     public static void init(Context context) {
 
@@ -53,11 +49,9 @@ public class StaticsAgent {
         DataAccess.shareInstance(context).createAllTables();
 
     }*/
-    public static void init(Context context) {
-        mContext = context;
-        if (helper == null) {
-            helper = new NoteDaoHelper(context);
-        }
+    public static void init() {
+
+        tcNoteDao = TcNoteModel.getInstance();
 
         if (daoThread == null) {
             daoThread = new DaoThread();
@@ -93,7 +87,7 @@ public class StaticsAgent {
 
     public static DataBlock getDataBlock() {
         DataBlock dataBlock = new DataBlock();
-        List<TcNote> list = ReadDataBaseAccess.shareInstance(mContext).loadAll();
+        List<TcNote> list = tcNoteDao.getTcNoteDao().loadAll();
         AppAction appAction = new AppAction();
         Page page = new Page();
         Event event = new Event();
@@ -133,8 +127,8 @@ public class StaticsAgent {
 
 
     public static void storeData(String firstcloumn, String secondcloumn, String thirdcloumn, String forthCloumn) {
-        note = new TcNote(null, firstcloumn, secondcloumn, thirdcloumn, forthCloumn, TcNote.DATA_STATUS_SAVED);
-        WriteDataBaseAccess.shareInstance(mContext).insertData(note);
+        TcNote note = new TcNote(null, firstcloumn, secondcloumn, thirdcloumn, forthCloumn, TcNote.DATA_STATUS_SAVED);
+        DbManager.getInstance().getDaoSession().getTcNoteDao().insert(note);
     }
 
     private static void storePaData(String appAction, String pageInfo, String eventInfo) {
@@ -178,8 +172,8 @@ public class StaticsAgent {
 
     }
 
-    public static synchronized int deleteData() {
-        return WriteDataBaseAccess.shareInstance(mContext).deleteAllNote();
+    public static synchronized void deleteData() {
+        tcNoteDao.deleteByStatus(TcNote.DATA_STATUS_SENDING);
     }
 
     private static class DaoThread extends Thread {
@@ -198,12 +192,12 @@ public class StaticsAgent {
                 public void handleMessage(Message msg) {
                     switch (msg.what) {
                         case MSG_TYPE_DELETE: {
-                            helper.deleteByStatus(TcNote.DATA_STATUS_SENDING);
+                            tcNoteDao.deleteByStatus(TcNote.DATA_STATUS_SENDING);
                         }
                         break;
 
                         case MSG_TYPE_ROLL_BACK: {
-                            helper.updateStatus(TcNote.DATA_STATUS_SENDING, TcNote.DATA_STATUS_SAVED);
+                            tcNoteDao.updateStatus(TcNote.DATA_STATUS_SENDING, TcNote.DATA_STATUS_SAVED);
                         }
                         break;
                         case MSG_TYPE_INSERT: {
@@ -211,7 +205,7 @@ public class StaticsAgent {
                                 TcNote note = (TcNote) msg.obj;
                                 notesBuffer.add(note);
                                 if (notesBuffer.size() >= BUFFER_MAX_SIZE) {
-                                    helper.insertList(notesBuffer);
+                                    tcNoteDao.insertList(notesBuffer);
                                     notesBuffer.clear();
                                 }
                             }
@@ -222,7 +216,7 @@ public class StaticsAgent {
                             if (msg.obj != null && msg.obj instanceof TcNote) {
                                 TcNote note = (TcNote) msg.obj;
                                 notesBuffer.add(note);
-                                helper.insertList(notesBuffer);
+                                tcNoteDao.insertList(notesBuffer);
                                 notesBuffer.clear();
                             }
                         }
@@ -230,13 +224,13 @@ public class StaticsAgent {
 
                         case MSG_TYPE_LOAD: {
                             if (notesBuffer.size() > 0) {
-                                helper.insertList(notesBuffer);
+                                tcNoteDao.insertList(notesBuffer);
                                 notesBuffer.clear();
                             }
                             DataBlock dataBlock = new DataBlock();
-                            List<TcNote> list = helper.getUnSendNotes();
+                            List<TcNote> list = tcNoteDao.getUnSendNotes();
                             if (list != null) {
-                                helper.updateStatus(TcNote.DATA_STATUS_SAVED, TcNote.DATA_STATUS_SENDING);
+                                tcNoteDao.updateStatus(TcNote.DATA_STATUS_SAVED, TcNote.DATA_STATUS_SENDING);
                             }
 
                             AppAction action;
@@ -294,6 +288,8 @@ public class StaticsAgent {
 
                         }
                         break;
+                        default:
+                            break;
                     }
                     super.handleMessage(msg);
                 }

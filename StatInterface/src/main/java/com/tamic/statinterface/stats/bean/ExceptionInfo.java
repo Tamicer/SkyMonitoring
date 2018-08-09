@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.model;
+package com.tamic.statinterface.stats.bean;
 
 /**
  * Created by null on 2016/9/22.

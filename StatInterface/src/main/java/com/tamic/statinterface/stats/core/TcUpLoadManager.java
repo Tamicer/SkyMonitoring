@@ -18,16 +18,14 @@
 package com.tamic.statinterface.stats.core;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-
+import com.tamic.statinterface.stats.bean.DataBlock;
 import com.tamic.statinterface.stats.constants.NetConfig;
 import com.tamic.statinterface.stats.db.helper.StaticsAgent;
 import com.tamic.statinterface.stats.http.TcHttpClient;
 import com.tamic.statinterface.stats.service.Platform;
-import com.tamic.statinterface.stats.util.JsonUtil;
+import com.tamic.statinterface.stats.util.LogUtil;
 import com.tamic.statinterface.stats.util.NetworkUtil;
-import com.tamic.statinterface.stats.util.StatLog;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -98,18 +96,18 @@ public class TcUpLoadManager implements IUpLoadlistener {
     /**
      * report
      */
-    public void report(Object o) {
-
+    public void report(DataBlock dataBlock) {
+        LogUtil.i(debug, TAG, "【TcUpLoadManager.report()】【dataBlock=" + dataBlock + "】");
         if (!NetworkUtil.isNetworkAvailable(mContext)) {
             return;
         }
 
-        if (o==null) {
+        if (dataBlock == null) {
             return;
         }
         //netEngine.setHttpClient(getHttpclient());
         atomic.set(netEngine);
-        atomic.getAndSet(netEngine).start(o);
+        atomic.getAndSet(netEngine).start(dataBlock);
     }
 
     /**
@@ -161,13 +159,13 @@ public class TcUpLoadManager implements IUpLoadlistener {
         Platform.get().execute(new Runnable() {
             @Override
             public void run() {
-                StatLog.d( TAG, "【TcUpLoadManager.run()】【deleteData start】");
+                LogUtil.i(debug, TAG, "【TcUpLoadManager.run()】【start】");
                 try {
-                    int deleteData = StaticsAgent.deleteData();
-                    StatLog.d( TAG, "【TcUpLoadManager.run()】【deleteData=" + deleteData + "】");
+                    StaticsAgent.deleteData();
+                    LogUtil.i(debug, TAG, "【TcUpLoadManager.run()】【end】");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    StatLog.d( TAG, "【TcUpLoadManager.run(Exception)】【e=" + e + "】");
+                    LogUtil.d(TAG, "【TcUpLoadManager.run(Exception)】【e=" + e + "】");
                 }
             }
         });

@@ -12,6 +12,9 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.tamic.statinterface.stats.constants.StaticsConfig;
+import com.tamic.statinterface.stats.sp.SharedPreferencesHelper;
+
+import java.util.UUID;
 
 
 /**
@@ -40,7 +43,7 @@ public class DeviceUtil {
     }
 
     /**
-     *  getAppVersionCode
+     * getAppVersionCode
      */
     public static int getAppVersionCode(Context context) {
         int versionCode = 0;
@@ -71,7 +74,7 @@ public class DeviceUtil {
     }
 
     /**
-     *getMacAddress
+     * getMacAddress
      *
      * @param context
      * @return MAC
@@ -84,11 +87,11 @@ public class DeviceUtil {
 
     /**
      * getScreenDisplay
+     *
      * @param activity
      * @return
      */
-    public static DisplayMetrics getScreenDisplay(Activity activity)
-    {
+    public static DisplayMetrics getScreenDisplay(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm;
@@ -96,6 +99,7 @@ public class DeviceUtil {
 
     /**
      * getScreenWidth
+     *
      * @param context
      * @return
      */
@@ -109,6 +113,7 @@ public class DeviceUtil {
 
     /**
      * getScreenHeight
+     *
      * @param context
      * @return
      */
@@ -122,6 +127,7 @@ public class DeviceUtil {
 
     /**
      * etScreenDensity
+     *
      * @param context
      * @return
      */
@@ -144,11 +150,22 @@ public class DeviceUtil {
         return Build.BRAND;
     }
 
-    /**获取手机系统版本*/
+    /**
+     * 获取手机系统版本
+     */
     public static int getSystemVersion() {
         return Build.VERSION.SDK_INT;
     }
 
 
-
+    public static String getDeviceId(Context context){
+        String DEVICE_ID = "DEVICE_ID";
+        SharedPreferencesHelper preferencesHelper = SharedPreferencesHelper.getInstance(context);
+        String device_id = preferencesHelper.getString(DEVICE_ID);
+        if(TextUtils.isEmpty(device_id)) {
+            device_id = UUID.randomUUID().toString();
+            preferencesHelper.putString(DEVICE_ID,device_id);
+        }
+        return device_id;
+    }
 }

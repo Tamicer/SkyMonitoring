@@ -4,10 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.tamic.statinterface.stats.core.StaticsListener;
-import com.tamic.statinterface.stats.model.AppAction;
-import com.tamic.statinterface.stats.model.Event;
-import com.tamic.statinterface.stats.model.KeyValueBean;
-import com.tamic.statinterface.stats.model.Page;
+import com.tamic.statinterface.stats.bean.AppAction;
+import com.tamic.statinterface.stats.bean.Event;
+import com.tamic.statinterface.stats.bean.KeyValueBean;
+import com.tamic.statinterface.stats.bean.Page;
 import com.tamic.statinterface.stats.sp.SharedPreferencesHelper;
 import com.tamic.statinterface.stats.util.DateUtil;
 

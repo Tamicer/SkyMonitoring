@@ -1,15 +1,11 @@
-package com.tamic.statinterface.stats.model.header;
+package com.tamic.statinterface.stats.bean.header;
 
 /**
  * Created by Tamic on 2016-03-24.
  */
 public class DeviceInfo {
     private String device_id;
-    private String idfa;
-    private String idfv;
-    private String openudid;
-    private String imei;
-    private String android_id;
+    private String appid;
     private String mac;
     private String locale;
     private String os = "Android";
@@ -27,45 +23,15 @@ public class DeviceInfo {
         this.device_id = device_id;
     }
 
-    public String getIdfv() {
-        return idfv;
+
+    public String getAppid() {
+        return appid;
     }
 
-    public void setIdfv(String idfv) {
-        this.idfv = idfv;
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 
-    public String getIdfa() {
-        return idfa;
-    }
-
-    public void setIdfa(String idfa) {
-        this.idfa = idfa;
-    }
-
-    public String getOpenudid() {
-        return openudid;
-    }
-
-    public void setOpenudid(String openudid) {
-        this.openudid = openudid;
-    }
-
-    public String getImei() {
-        return imei;
-    }
-
-    public void setImei(String imei) {
-        this.imei = imei;
-    }
-
-    public String getAndroid_id() {
-        return android_id;
-    }
-
-    public void setAndroid_id(String android_id) {
-        this.android_id = android_id;
-    }
 
     public String getMac() {
         return mac;

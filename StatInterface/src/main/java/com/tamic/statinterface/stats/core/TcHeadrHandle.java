@@ -7,14 +7,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
-import com.tamic.statinterface.stats.model.header.AppInfo;
-import com.tamic.statinterface.stats.model.header.DeviceInfo;
-import com.tamic.statinterface.stats.model.header.HeaderInfo;
-import com.tamic.statinterface.stats.model.header.NetworkInfo;
+import com.tamic.statinterface.stats.bean.header.AppInfo;
+import com.tamic.statinterface.stats.bean.header.DeviceInfo;
+import com.tamic.statinterface.stats.bean.header.HeaderInfo;
+import com.tamic.statinterface.stats.bean.header.NetworkInfo;
 import com.tamic.statinterface.stats.util.DeviceUtil;
 import com.tamic.statinterface.stats.util.NetworkUtil;
 
@@ -75,7 +73,9 @@ public class TcHeadrHandle {
 
     }
 
-    /** get AppInfo
+    /**
+     * get AppInfo
+     *
      * @param context
      */
     private static AppInfo getAppInfo(Context context) {
@@ -108,7 +108,9 @@ public class TcHeadrHandle {
         }
     }
 
-    /** get Device Info
+    /**
+     * get Device Info
+     *
      * @param context
      */
     private static DeviceInfo getDeviceInfo(Context context) {
@@ -117,36 +119,8 @@ public class TcHeadrHandle {
             return deviceinfo;
         }
         deviceinfo = new DeviceInfo();
-
-        // 设备ID，
-
-        mTelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-//        try {
-//            if (mTelephonyMgr != null) {
-//
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-//                        String deviceId = mTelephonyMgr.getDeviceId();
-//                        deviceinfo.setDevice_id(deviceId);
-//                        // android Imei
-//                        deviceinfo.setImei(deviceId);
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         // AndroidId
-        try {
-            String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            deviceinfo.setAndroid_id(androidId);
-            if (TextUtils.isEmpty(deviceinfo.getImei())) {
-                deviceinfo.setImei(androidId);
-            }
-        } catch (Exception e) {
-            // do nothing. not use the data
-        }
+        deviceinfo.setDevice_id(DeviceUtil.getDeviceId(context));
 
         deviceinfo.setMac(DeviceUtil.getMacAddress(context));
 
@@ -156,16 +130,7 @@ public class TcHeadrHandle {
 
         deviceinfo.setOs_version(Build.VERSION.RELEASE);
 
-        // UniqueId
-        String openId = deviceinfo.getDevice_id();
-        if (openId == null || openId.trim().length() == 0) {
-            openId = deviceinfo.getAndroid_id();
-        }
-        if (openId == null || openId.trim().length() == 0) {
-            openId = deviceinfo.getMac();
-        }
-
-        deviceinfo.setOpenudid(openId);
+        deviceinfo.setAppid("zuber");
         deviceinfo.setResolution(DeviceUtil.getScreenWidth(context) + "*" + DeviceUtil.getScreenHeight(context));
         deviceinfo.setDensity(String.valueOf(DeviceUtil.getScreenDensity(context)));
         deviceinfo.setLocale(Locale.getDefault().getLanguage());
@@ -174,7 +139,9 @@ public class TcHeadrHandle {
 
     }
 
-    /**  get NetWork Info
+    /**
+     * get NetWork Info
+     *
      * @param context
      */
     protected static NetworkInfo getNetWorkInfo(Context context) {
@@ -185,23 +152,14 @@ public class TcHeadrHandle {
         }
         networkinfo.setIp_addr(NetworkUtil.getLocalIpAddress());
 
-        networkinfo.setWifi_ind(NetworkUtil.isWifi(context));
-
-        if (mTelephonyMgr.getSimState() == TelephonyManager.SIM_STATE_READY) {
-            networkinfo.setCarrier(mTelephonyMgr.getSimOperatorName());
-        }
-
-//        Location location = getLocation(context);
-//        if (location != null) {
-//            networkinfo.setLatitude(String.valueOf(location.getLatitude()));
-//            networkinfo.setLongitude(String.valueOf(location.getLongitude()));
-//        }
+        networkinfo.setWifi(NetworkUtil.isWifi(context));
 
         return networkinfo;
     }
 
     /**
      * 获取Location
+     *
      * @param context
      * @return
      */

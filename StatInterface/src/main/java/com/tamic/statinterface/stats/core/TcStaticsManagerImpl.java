@@ -28,11 +28,11 @@ import com.alibaba.fastjson.JSON;
 import com.tamic.statinterface.stats.constants.StaticsConfig;
 import com.tamic.statinterface.stats.db.helper.DataConstruct;
 import com.tamic.statinterface.stats.db.helper.StaticsAgent;
-import com.tamic.statinterface.stats.model.DataBlock;
+import com.tamic.statinterface.stats.bean.DataBlock;
 import com.tamic.statinterface.stats.service.Platform;
 import com.tamic.statinterface.stats.util.JsonUtil;
+import com.tamic.statinterface.stats.util.LogUtil;
 import com.tamic.statinterface.stats.util.NetworkUtil;
-import com.tamic.statinterface.stats.util.StatLog;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -88,7 +88,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
         paObserverPresenter = new TcObserverPresenter(this);
 
         // init StaticsAgent
-        StaticsAgent.init(mContext);
+        StaticsAgent.init();
 
         // init CrashHandler
         TcCrashHandler.getInstance().init(mContext);
@@ -117,9 +117,9 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
                         dataBlock.getPage().isEmpty()) {
                     return;
                 }
-                StatLog.d(TAG, "TcStatfacr >> report is Start");
+                LogUtil.d(TAG, "TcStatfacr >> report is Start");
                 String jsonString = JsonUtil.toJSONString(dataBlock);
-                StatLog.d(TAG, "TcStatfacr >> report is sendding"+jsonString);
+                LogUtil.d(TAG, "TcStatfacr >> report is sendding"+jsonString);
                 TcUpLoadManager.getInstance(mContext).report(dataBlock);
             }
         });
@@ -239,7 +239,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
      */
     void onScheduleTimeOut() {
 
-        StatLog.d(LOG_TAG, "onScheduleTimeOut  is sendData");
+        LogUtil.d(LOG_TAG, "onScheduleTimeOut  is sendData");
         onSend();
     }
 
@@ -251,7 +251,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
         if (StaticsConfig.DEBUG &&
                 TcStatInterface.uploadPolicy == TcStatInterface.UploadPolicy.UPLOAD_POLICY_DEVELOPMENT) {
             statiPollMgr.start(5 * 1000);
-            StatLog.d(LOG_TAG, "Schedule is start");
+            LogUtil.d(LOG_TAG, "Schedule is start");
         } else {
             if (NetworkUtil.isWifi(mContext)) {
                 statiPollMgr.start(TcStatInterface.getIntervalRealtime() * 60 * 1000);
@@ -297,14 +297,14 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
      */
     public void stopSchedule() {
 
-        StatLog.d(LOG_TAG, "stopSchedule()");
+        LogUtil.d(LOG_TAG, "stopSchedule()");
 
         statiPollMgr.stop();
     }
 
     @Override
     public void onStart() {
-        StatLog.d(LOG_TAG, "startSchedule");
+        LogUtil.d(LOG_TAG, "startSchedule");
 
         startSchedule();
 
@@ -367,7 +367,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
                                 dataBlock.getPage().isEmpty()) {
                             return;
                         }
-                        StatLog.d(TAG, "TcStatfacr >> report is Start");
+                        LogUtil.d(TAG, "TcStatfacr >> report is Start");
                         TcUpLoadManager.getInstance(mContext).report(dataBlock);
                     }
                 }

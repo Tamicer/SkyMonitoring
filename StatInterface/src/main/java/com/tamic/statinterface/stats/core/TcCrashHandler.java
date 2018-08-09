@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.tamic.statinterface.stats.db.helper.StaticsAgent;
-import com.tamic.statinterface.stats.model.ExceptionInfo;
+import com.tamic.statinterface.stats.bean.ExceptionInfo;
 import com.tamic.statinterface.stats.util.DeviceUtil;
 
 /**

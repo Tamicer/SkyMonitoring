@@ -15,7 +15,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.tamic.statinterface.stats.model;
+package com.tamic.statinterface.stats.bean;
 
 
 import java.util.List;

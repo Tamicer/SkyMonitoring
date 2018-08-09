@@ -11,7 +11,7 @@ import com.tamic.statinterface.stats.db.helper.DataConstruct;
 import com.tamic.statinterface.stats.presenter.TcDeblockObserver;
 import com.tamic.statinterface.stats.presenter.TcNetworkObserver;
 import com.tamic.statinterface.stats.presenter.TcScreenObserver;
-import com.tamic.statinterface.stats.util.StatLog;
+import com.tamic.statinterface.stats.util.LogUtil;
 
 import java.util.List;
 
@@ -118,7 +118,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
                 if (!TextUtils.isEmpty(packageName)) {
                     if (!packageName.equals(mPackageName)) {
                         isTopTask = false;
-                        StatLog.d(LOG_TAG, "onPause --> onForegroundChanged(false)");
+                        LogUtil.d(LOG_TAG, "onPause --> onForegroundChanged(false)");
                         onForegroundChanged(aContext, false);
                     }
                 }
@@ -133,7 +133,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
      *            Context
      */
     public void onStop(Context aContext) {
-        StatLog.d(LOG_TAG, "onStop");
+        LogUtil.d(LOG_TAG, "onStop");
         if (isTopTask) {
             ActivityManager.RunningTaskInfo taskInfo = getRunningTaskInfo(aContext);
             if (taskInfo != null && taskInfo.topActivity != null) {
@@ -141,7 +141,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
                 if (!TextUtils.isEmpty(packageName)) {
                     if (!packageName.equals(mPackageName)) {
                         isTopTask = false;
-                        StatLog.d(LOG_TAG, "onStop --> onForegroundChanged(false)");
+                        LogUtil.d(LOG_TAG, "onStop --> onForegroundChanged(false)");
                         onForegroundChanged(aContext, false);
                     }
                 }
@@ -300,11 +300,11 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
 
     @Override
     public void onNetworkConnected(Context aContext) {
-        StatLog.d(LOG_TAG, "onNetworkConnected");
+        LogUtil.d(LOG_TAG, "onNetworkConnected");
         // 同步网络信息
         TcHeadrHandle.getHeader(aContext).setNetworkinfo(TcHeadrHandle.getNetWorkInfo(aContext));
         if (isForeground) {
-            StatLog.d(LOG_TAG, "onNetworkConnected send data");
+            LogUtil.d(LOG_TAG, "onNetworkConnected send data");
             reportData(aContext);
             scheduleReStart();
         } else {
@@ -315,7 +315,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
 
     @Override
     public void onNetworkUnConnected(Context aContext) {
-        StatLog.d(LOG_TAG, "onNetworkUnConnected");
+        LogUtil.d(LOG_TAG, "onNetworkUnConnected");
         scheduleStop();
 
     }
@@ -323,7 +323,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
     @Override
     public void onScreenOn(Context aContext) {
 
-        StatLog.d(LOG_TAG, "onScreenOn");
+        LogUtil.d(LOG_TAG, "onScreenOn");
         //Toast.makeText(aContext, "屏幕亮起", Toast.LENGTH_SHORT).show();
         if (isTopTask) {
             if (isScreenOff) {
@@ -332,7 +332,7 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
                 if (isScreenLocked(aContext)) { //如果锁屏，则不作处理
                     isScreenLocked = true;
                 } else {
-                    StatLog.d(LOG_TAG, "onScreenOn-->onForegroundChanged(true)");
+                    LogUtil.d(LOG_TAG, "onScreenOn-->onForegroundChanged(true)");
                     isScreenLocked = false;
                     onForegroundChanged(aContext, true);
                 }
@@ -345,12 +345,12 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
     public void onScreenOff(Context aContext) {
 
         //屏幕关闭时，如果还在前台，屏幕之前打开，则肯定切换至后台
-        StatLog.d(LOG_TAG, "onScreenOff");
+        LogUtil.d(LOG_TAG, "onScreenOff");
         if (isTopTask) {
             if (!isScreenOff) {
                 isScreenOff = true;
                 if (!isScreenLocked) {
-                    StatLog.d(LOG_TAG, "onScreenOff-->onForegroundChanged(false)");
+                    LogUtil.d(LOG_TAG, "onScreenOff-->onForegroundChanged(false)");
                     onForegroundChanged(aContext, false);
                 }
             }
@@ -360,9 +360,9 @@ public class TcObserverPresenter implements TcNetworkObserver.INetworkListener, 
 
     @Override
     public void onKeyguardGone(Context aContext) {
-        StatLog.d(LOG_TAG, "onKeyGuardGone");
+        LogUtil.d(LOG_TAG, "onKeyGuardGone");
         if (isTopTask) {
-            StatLog.d(LOG_TAG, "onKeyGuardGone foreground");
+            LogUtil.d(LOG_TAG, "onKeyGuardGone foreground");
             //如果在前台，屏幕锁屏，则屏幕已打开
             if (isScreenLocked) {
                 isScreenLocked = false;

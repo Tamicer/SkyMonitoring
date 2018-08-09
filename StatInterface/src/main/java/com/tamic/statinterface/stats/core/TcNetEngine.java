@@ -5,12 +5,11 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tamic.statinterface.stats.constants.NetConfig;
 import com.tamic.statinterface.stats.constants.StaticsConfig;
 import com.tamic.statinterface.stats.http.TcHttpClient;
 import com.tamic.statinterface.stats.util.JsonUtil;
-import com.tamic.statinterface.stats.util.StatLog;
+import com.tamic.statinterface.stats.util.LogUtil;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -95,7 +94,7 @@ public class TcNetEngine {
 
         String str = JsonUtil.toJSONString(TcHeadrHandle.getHeader(context));
 
-        StatLog.d(TAG, "head:" + str);
+        LogUtil.d(TAG, "head:" + str);
         if (headers.size() >= 0) {
             headers.clear();
         }
@@ -109,7 +108,7 @@ public class TcNetEngine {
             requestParams.put(NetConfig.PARAMS_KEY, string);
         }
 
-        StatLog.d(TAG, "body:" + string);
+        LogUtil.d(TAG, "body:" + string);
 
         if (headers != null && headers.size() > 0) {
             reqHeaders = new Header[headers.size()];
@@ -168,12 +167,12 @@ public class TcNetEngine {
             }
 
             for (Header tmp : headers) {
-                StatLog.d(TAG, tmp.getName() + ":" + tmp.getValue());
+                LogUtil.d(TAG, tmp.getName() + ":" + tmp.getValue());
             }
 
-            StatLog.d(TAG, "response code: " + statusCode);
+            LogUtil.d(TAG, "response code: " + statusCode);
             if (statusCode == HttpStatus.SC_OK) {
-                StatLog.d(TAG, "onSuccess");
+                LogUtil.d(TAG, "onSuccess");
                 mCanContinue = false;
             } else if (statusCode == HttpStatus.SC_PARTIAL_CONTENT) {
                 mCanContinue = true;

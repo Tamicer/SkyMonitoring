@@ -24,7 +24,7 @@ android {
 
 greendao {
     targetGenDir 'src/main/java'
-    schemaVersion 1
+    schemaVersion 2
     daoPackage 'com.tamic.statinterface.stats.db'
 }
 
@@ -33,6 +33,10 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.8'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.7'
+    compile 'com.squareup.okio:okio:1.14.0'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 }
 
 def siteUrl = 'https://github.com/NeglectedByBoss/TcStatInterface'
@@ -109,7 +113,6 @@ group = "com.tamic"
 //        publicDownloadNumbers = true
 //    }
 //}
-
 
 //javadoc {
 //    options{

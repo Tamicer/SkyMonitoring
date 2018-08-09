@@ -14,7 +14,6 @@ public class StatAppliation extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         DbManager.getInstance().init(this);
 
         // you app id
@@ -31,5 +30,10 @@ public class StatAppliation extends Application {
 
         TcStatInterface.recordAppStart();
     }
+    @Override
+    public void onTerminate() {
 
+        DbManager.getInstance().destroy();
+        super.onTerminate();
+    }
 }

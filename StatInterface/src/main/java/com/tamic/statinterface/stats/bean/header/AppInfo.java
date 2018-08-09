@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.model.header;
+package com.tamic.statinterface.stats.bean.header;
 
 /**
  * Created by Tamic on 2016-03-24.

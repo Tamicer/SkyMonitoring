@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 
 import com.tamic.statinterface.stats.constants.StaticsConfig;
 import com.tamic.statinterface.stats.core.TcIntentManager;
-import com.tamic.statinterface.stats.util.StatLog;
+import com.tamic.statinterface.stats.util.LogUtil;
 
 /**
  * DeblockObserver
@@ -18,8 +18,8 @@ public class TcDeblockObserver extends BroadcastReceiver {
 
 	/** DEBUG mode */
 	private static final boolean DEBUG = StaticsConfig.DEBUG;
-	/** StatLog TAG */
-	private static final String StatLog_TAG = TcDeblockObserver.class.getSimpleName();
+	/** LogUtil TAG */
+	private static final String LogUtil_TAG = TcDeblockObserver.class.getSimpleName();
 	/** Context */
 	private Context mContext;
 	/** IKeyguardListener */
@@ -54,7 +54,7 @@ public class TcDeblockObserver extends BroadcastReceiver {
 			}
 		} catch (Exception e) {
 			if (DEBUG) {
-				StatLog.w(StatLog_TAG, "start Exception", e);
+				LogUtil.d(LogUtil_TAG, "start Exception");
 			}
 		}
 	}
@@ -67,7 +67,7 @@ public class TcDeblockObserver extends BroadcastReceiver {
 			mContext.unregisterReceiver(this);
 		} catch (Exception e) {
 			if (DEBUG) {
-				StatLog.w(StatLog_TAG, "stop Exception", e);
+				LogUtil.d(LogUtil_TAG, "stop Exception");
 			}
 		}
 	}
