@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.tamic.statinterface.stats.core.TcStatInterface;
 import com.tamic.statinterface.stats.db.DbManager;
+import com.tamic.statinterface.stats.util.LogUtil;
 
 
 /**
@@ -14,6 +15,7 @@ public class StatAppliation extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtil.i(debug, TAG, "【StatAppliation.onCreate()】【start】");
         DbManager.getInstance().init(this);
 
         // you app id
@@ -30,10 +32,15 @@ public class StatAppliation extends Application {
 
         TcStatInterface.recordAppStart();
     }
+
     @Override
     public void onTerminate() {
-
+        LogUtil.i(debug, TAG, "【StatAppliation.onTerminate()】【start】");
         DbManager.getInstance().destroy();
         super.onTerminate();
     }
+
+    private static final String TAG = StatAppliation.class.getSimpleName();
+    private static final boolean debug = true;
+
 }

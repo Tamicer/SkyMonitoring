@@ -128,7 +128,7 @@ public class TcHeadrHandle {
 
         deviceinfo.setOs("Android");
 
-        deviceinfo.setOs_version(Build.VERSION.RELEASE);
+        deviceinfo.setOsVersion(Build.VERSION.RELEASE);
 
         deviceinfo.setAppid("zuber");
         deviceinfo.setResolution(DeviceUtil.getScreenWidth(context) + "*" + DeviceUtil.getScreenHeight(context));
