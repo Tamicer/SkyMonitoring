@@ -2,6 +2,7 @@ package com.tamic.statinterface.stats.core;
 
 import android.content.Context;
 
+import com.tamic.statinterface.stats.bean.body.ViewPath;
 import com.tamic.statinterface.stats.constants.NetConfig;
 
 import java.util.HashMap;
@@ -206,9 +207,9 @@ public final class TcStatInterface {
     /**
      * 初始化Event
      */
-    public static void initEvent(String eventName) {
+    public static void initEvent(ViewPath viewPath) {
 
-        TcStatSdk.getInstance(context).initEvent(eventName);
+        TcStatSdk.getInstance(context).initEvent(viewPath);
 
     }
 

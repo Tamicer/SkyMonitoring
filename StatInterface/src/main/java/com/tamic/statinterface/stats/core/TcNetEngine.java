@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tamic.statinterface.stats.constants.NetConfig;
 import com.tamic.statinterface.stats.constants.StaticsConfig;
@@ -48,7 +49,6 @@ public class TcNetEngine {
 
     private HashMap<String, String> headers;
 
-    private HashMap<String,Object> requestParams;
 
     Header[] reqHeaders;
 
@@ -77,7 +77,6 @@ public class TcNetEngine {
             mHostUrl = NetConfig.URL;
         }
         headers = new HashMap<String, String>();
-        requestParams = new HashMap<>();
     }
 
     public TcHttpClient getHttpClient() {
@@ -101,12 +100,8 @@ public class TcNetEngine {
         headers.put(NetConfig.HEADERS_KEY, URLEncoder.encode(str));
         //headers.put("Accept", "application/json");
 
-        requestParams.remove(NetConfig.PARAMS_KEY);
 
         Object string = strings[0];
-        if (string != null) {
-            requestParams.put(NetConfig.PARAMS_KEY, string);
-        }
 
         LogUtil.d(TAG, "body:" + string);
 
@@ -137,7 +132,7 @@ public class TcNetEngine {
             }
         }
         Log.d(TAG, "【TcNetEngine.start()】【body=" + string + "】");
-        TcHttpClient.post(context, mHostUrl, reqHeaders, requestParams, "application/json", mTaskHandler );
+        TcHttpClient.post(context, mHostUrl, reqHeaders, JSON.toJSONString(string), "application/json", mTaskHandler );
         return null;
     }
 

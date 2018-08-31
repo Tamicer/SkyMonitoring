@@ -1,21 +1,23 @@
 package com.tamic.statinterface.stats.bean.header;
 
+
 /**
  * app信息
+ *
+ * @author Zuber
  */
 public class AppInfo {
 
     private String appId;
 
-    private String  appScret;
+    private String appScret;
 
-    private String  appVersion;
+    private String appVersion;
 
     private String appChannel;
 
     public AppInfo() {
     }
-
 
     public String getAppId() {
         return appId;

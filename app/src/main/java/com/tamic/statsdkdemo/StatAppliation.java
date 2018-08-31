@@ -37,6 +37,7 @@ public class StatAppliation extends Application {
     public void onTerminate() {
         LogUtil.i(debug, TAG, "【StatAppliation.onTerminate()】【start】");
         DbManager.getInstance().destroy();
+        TcStatInterface.recordAppEnd();
         super.onTerminate();
     }
 

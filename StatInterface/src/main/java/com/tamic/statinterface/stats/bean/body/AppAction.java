@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.bean;
+package com.tamic.statinterface.stats.bean.body;
 
 /**
 
@@ -6,7 +6,8 @@ package com.tamic.statinterface.stats.bean;
  */
 public class AppAction {
     private String action_time ;
-    private String app_action_type ;
+    private int app_action_type ;
+    private String app_action_desc ;
 
     public String getAction_time() {
         return action_time;
@@ -16,12 +17,20 @@ public class AppAction {
         this.action_time = action_time;
     }
 
-    public String getApp_action_type() {
+    public int getApp_action_type() {
         return app_action_type;
     }
 
-    public void setApp_action_type(String app_action_type) {
+    public void setApp_action_type(int app_action_type) {
         this.app_action_type = app_action_type;
+    }
+
+    public String getApp_action_desc() {
+        return app_action_desc;
+    }
+
+    public void setApp_action_desc(String app_action_desc) {
+        this.app_action_desc = app_action_desc;
     }
 
     @Override

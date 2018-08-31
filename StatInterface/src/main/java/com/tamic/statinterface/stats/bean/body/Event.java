@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.bean;
+package com.tamic.statinterface.stats.bean.body;
 
 import java.util.List;
 

@@ -1,8 +1,5 @@
 package com.tamic.statsdkdemo;
 
-import android.app.Activity;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
+import com.tamic.statinterface.stats.bean.body.ViewPath;
 import com.tamic.statinterface.stats.core.TcStatInterface;
 
 
@@ -19,19 +17,23 @@ import com.tamic.statinterface.stats.core.TcStatInterface;
 
 public abstract class TamicActivity extends AppCompatActivity {
 
-    private int statusBarHeight;
-    View rootView;
-    String rootViewTree;
-    String bigDataPrefix;
-    String bigDataIngorePrefix;
-    String bigDataEventPrefix;
     private String TAG = "Tamic";
+
+    View rootView;
+
+    String rootViewTree;
+
+    String bigDataPrefix;
+
+    String bigDataIngorePrefix;
+
+    String bigDataEventPrefix;
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         rootView = getWindow().getDecorView();
-        rootViewTree = getPackageName() + "." + getClass().getSimpleName();
+        rootViewTree = getClass().getName();
         bigDataPrefix = "Tamic_test";
         bigDataIngorePrefix = bigDataPrefix + "";
         bigDataEventPrefix = bigDataIngorePrefix + "Igmore";
@@ -42,18 +44,15 @@ public abstract class TamicActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onResume() {
         super.onResume();
         TcStatInterface.recordPageStart(TamicActivity.this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onPause() {
         super.onPause();
-
         TcStatInterface.recordPageEnd();
     }
 
@@ -65,12 +64,11 @@ public abstract class TamicActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             ViewPath path = findClickView(ev);
             if (path != null) {
-                Log.e(TAG, "path -->" + path.viewTree);
-                TcStatInterface.initEvent(path.viewTree);
+                Log.e(TAG, "path -->" + path);
+                TcStatInterface.initEvent(path);
             }
         }
         return super.dispatchTouchEvent(ev);
@@ -85,7 +83,7 @@ public abstract class TamicActivity extends AppCompatActivity {
 
     private ViewPath searchClickView(ViewPath myView, MotionEvent event, int index) {
         ViewPath clickView = null;
-        View view = myView.view;
+        View view = myView.getView();
         if (isInView(view, event)) {
             //遍历根view下的子view以及所有子view上的控件
             // 当第二层不为LinearLayout时，说明系统进行了改造，多了一层,需要多剔除一层
@@ -122,7 +120,7 @@ public abstract class TamicActivity extends AppCompatActivity {
                     return myView;
                 }
                 for (int i = childCount - 1; i >= 0; i--) {
-                    myView.view = group.getChildAt(i);
+                    myView.setView(group.getChildAt(i));
                     clickView = searchClickView(myView, event, i);
                     if (clickView != null) {
                         return clickView;

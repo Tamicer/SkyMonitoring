@@ -1,7 +1,9 @@
 package com.tamic.statinterface.stats.bean.header;
 
 /**
- * Created by Tamic on 2016-04-06.
+ *
+ * @author Tamic
+ * @date 2016-04-06
  */
 public class HeaderInfo {
 
@@ -43,4 +45,6 @@ public class HeaderInfo {
     public void setNetworkinfo(NetworkInfo networkinfo) {
         this.networkinfo = networkinfo;
     }
+
+
 }

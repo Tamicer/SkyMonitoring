@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tamic.statinterface.stats.core.TcStatInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -345,6 +347,12 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        TcStatInterface.recordAppEnd();
+        super.onDestroy();
     }
 }
 

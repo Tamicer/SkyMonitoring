@@ -1,4 +1,4 @@
-package com.tamic.statinterface.stats.bean;
+package com.tamic.statinterface.stats.bean.body;
 
 /**
  *业务对应的key-value

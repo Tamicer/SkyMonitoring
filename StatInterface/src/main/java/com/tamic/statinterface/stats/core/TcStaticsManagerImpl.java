@@ -25,12 +25,12 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.tamic.statinterface.stats.bean.body.AppActionType;
+import com.tamic.statinterface.stats.bean.body.ViewPath;
 import com.tamic.statinterface.stats.constants.StaticsConfig;
 import com.tamic.statinterface.stats.db.helper.DataConstruct;
 import com.tamic.statinterface.stats.db.helper.StaticsAgent;
-import com.tamic.statinterface.stats.bean.DataBlock;
-import com.tamic.statinterface.stats.service.Platform;
-import com.tamic.statinterface.stats.util.JsonUtil;
+import com.tamic.statinterface.stats.bean.body.DataBlock;
 import com.tamic.statinterface.stats.util.LogUtil;
 import com.tamic.statinterface.stats.util.NetworkUtil;
 
@@ -107,22 +107,22 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
         StaticsAgent.getDataBlock(mUploadThread.mHandler);
         // report data to server
-        Platform.get().execute(new Runnable() {
-            @Override
-            public void run() {
-                DataBlock dataBlock = StaticsAgent.getDataBlock();
-
-                if (dataBlock.getApp_action().isEmpty() &&
-                        dataBlock.getEvent().isEmpty() &&
-                        dataBlock.getPage().isEmpty()) {
-                    return;
-                }
-                LogUtil.d(TAG, "TcStatfacr >> report is Start");
-                String jsonString = JsonUtil.toJSONString(dataBlock);
-                LogUtil.d(TAG, "TcStatfacr >> report is sendding"+jsonString);
-                TcUpLoadManager.getInstance(mContext).report(dataBlock);
-            }
-        });
+//        Platform.get().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                DataBlock dataBlock = StaticsAgent.getDataBlock();
+//
+//                if (dataBlock.getAppActions().isEmpty() &&
+//                        dataBlock.getEvent().isEmpty() &&
+//                        dataBlock.getPage().isEmpty()) {
+//                    return;
+//                }
+//                LogUtil.d(TAG, "TcStatfacr >> report is Start");
+//                String jsonString = JsonUtil.toJSONString(dataBlock);
+//                LogUtil.d(TAG, "TcStatfacr >> report is sendding"+jsonString);
+//                TcUpLoadManager.getInstance(mContext).report(dataBlock);
+//            }
+//        });
     }
 
     @Override
@@ -146,7 +146,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
         //send
         onSend();
         // store appAction
-        DataConstruct.storeAppAction("1");
+        DataConstruct.storeAppAction(AppActionType.APPSTART);
     }
 
     @Override
@@ -169,9 +169,9 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
         //startSchedule
         startSchedule();
 
-        String pageId = checkValidId(context.getClass().getSimpleName());
+        String pageId = checkValidId(context.getClass().getName());
         if (pageId == null) {
-            pageId = context.getClass().getSimpleName();
+            pageId = context.getClass().getName();
         }
 
         // init page
@@ -191,7 +191,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
     public void onRrecordAppEnd() {
 
         //recard APP exit
-        DataConstruct.storeAppAction("2");
+        DataConstruct.storeAppAction(AppActionType.APPEXIT);
         onSend();
         onRelease();
     }
@@ -208,8 +208,13 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
 
     @Override
-    public void onInitEvent(String eventName) {
-        DataConstruct.initEvent(eventName);
+    public void onInitEvent(String eventName,String viewValue) {
+        DataConstruct.initEvent(eventName,viewValue);
+    }
+
+    @Override
+    public void onInitEvent(ViewPath viewPath) {
+        DataConstruct.initEvent(viewPath);
     }
 
     @Override
@@ -362,7 +367,7 @@ public class TcStaticsManagerImpl implements TcStaticsManager, TcObserverPresent
 
                     if (msg.obj != null && msg.obj instanceof DataBlock) {
                         DataBlock dataBlock = (DataBlock) msg.obj;
-                        if (dataBlock.getApp_action().isEmpty() &&
+                        if (dataBlock.getAppActions().isEmpty() &&
                                 dataBlock.getEvent().isEmpty() &&
                                 dataBlock.getPage().isEmpty()) {
                             return;

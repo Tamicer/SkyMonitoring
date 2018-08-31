@@ -2,14 +2,16 @@ package com.tamic.statinterface.stats.bean.header;
 
 /**
  * NetworkInfo
- * Created by Tamic on 2016-03-24.
+ *
+ * @author Tamic
+ * @date 2016-03-24
  */
 public class NetworkInfo {
 
     //is wifi
     private Boolean wifi;
     //IP
-    private String ip_addr;
+    private String ipAddr;
     //latitude
     private String latitude;
     //longitude
@@ -28,12 +30,12 @@ public class NetworkInfo {
         this.longitude = longitude;
     }
 
-    public String getIp_addr() {
-        return ip_addr;
+    public String getIpAddr() {
+        return ipAddr;
     }
 
-    public void setIp_addr(String ip_addr) {
-        this.ip_addr = ip_addr;
+    public void setIpAddr(String ipAddr) {
+        this.ipAddr = ipAddr;
     }
 
     public Boolean getWifi() {

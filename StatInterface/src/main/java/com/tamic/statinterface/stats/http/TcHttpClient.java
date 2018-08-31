@@ -56,10 +56,9 @@ public class TcHttpClient {
         client.get(context, getAbsoluteUrl(url), headers, params, responseHandler);
     }
 
-    public static void post(Context context, String url, Header[] headers, HashMap<String, Object> params, String contentType,
+    public static void post(Context context, String url, Header[] headers, String jsonParams, String contentType,
                             AsyncHttpResponseHandler responseHandler) {
         StringEntity stringEntity = null;
-        String jsonParams = JSON.toJSONString(params);
         stringEntity = new StringEntity(jsonParams, APPLICATION_JSON);
         client.post(context, getAbsoluteUrl(url), headers, stringEntity, "application/json", responseHandler);
     }
@@ -82,7 +81,7 @@ public class TcHttpClient {
      *
      * @param time 秒数
      */
-    public static void setTimeOut(int time) {
+    public void setTimeOut(int time) {
         client.setTimeout(time);
     }
 }

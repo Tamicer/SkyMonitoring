@@ -3,15 +3,17 @@ package com.tamic.statinterface.stats.db.helper;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.tamic.statinterface.stats.bean.body.AppAction;
+import com.tamic.statinterface.stats.bean.body.Event;
+import com.tamic.statinterface.stats.bean.body.KeyValueBean;
+import com.tamic.statinterface.stats.bean.body.Page;
+import com.tamic.statinterface.stats.bean.body.ViewPath;
 import com.tamic.statinterface.stats.core.StaticsListener;
-import com.tamic.statinterface.stats.bean.AppAction;
-import com.tamic.statinterface.stats.bean.Event;
-import com.tamic.statinterface.stats.bean.KeyValueBean;
-import com.tamic.statinterface.stats.bean.Page;
 import com.tamic.statinterface.stats.sp.SharedPreferencesHelper;
 import com.tamic.statinterface.stats.util.DateUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -36,19 +38,12 @@ public class DataConstruct {
     private DataConstruct() {
     }
 
-    /**
-     * initEvent
-     *
-     * @param event_name
-     */
-    public static void initEvent(String event_name) {
-        initEvent(event_name, null);
-    }
 
     /**
      * initEvent 带参数的事件
-     * @param eventName      事件ID
-     * @param parameters     事件参数（k-v）
+     *
+     * @param eventName  事件ID
+     * @param parameters 事件参数（k-v）
      */
     public static synchronized void initEvent(String eventName, Map<String, String> parameters) {
 
@@ -62,7 +57,7 @@ public class DataConstruct {
         event.setEvent_name(eventName);
         event.setAction_time(DateUtil.getDateString(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
 
-        if (parameters !=null && !parameters.isEmpty() && parameters.size() > 0) {
+        if (parameters != null && !parameters.isEmpty() && parameters.size() > 0) {
             CopyOnWriteArrayList<KeyValueBean> parameter = new CopyOnWriteArrayList<>();
 
             Iterator<String> keys = parameters.keySet().iterator();
@@ -77,6 +72,19 @@ public class DataConstruct {
             }
         }
         storeEvent(event);
+    }
+
+    public static synchronized void initEvent(String eventName, String viewValue) {
+        Map<String, String> parameters=new HashMap<>(1);
+        parameters.put("value",viewValue);
+        initEvent(eventName,parameters);
+    }
+
+    public static synchronized void initEvent(ViewPath viewPath) {
+        Map<String, String> parameters=new HashMap<>(1);
+        parameters.put("value",viewPath.viewValue);
+        parameters.put("tagvalue",viewPath.tagValue);
+        initEvent(viewPath.viewTree,parameters);
     }
 
     /**
@@ -99,9 +107,8 @@ public class DataConstruct {
     }
 
 
-
     /**
-     * initPage 
+     * initPage
      *
      * @param eventInterface
      */
@@ -151,7 +158,7 @@ public class DataConstruct {
      *
      * @param type 1 app打开  2app关闭 3唤醒
      */
-    public static void storeAppAction(String type) {
+    public static void storeAppAction(int type) {
         appAction = new AppAction();
         appAction.setAction_time(DateUtil.getDateString(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
         appAction.setApp_action_type(type);
@@ -161,7 +168,7 @@ public class DataConstruct {
 
     /**
      * storeEvent
-     *you need store  to call this
+     * you need store  to call this
      */
     private static synchronized void storeEvent(Event event) {
         if (event == null) {
@@ -191,9 +198,8 @@ public class DataConstruct {
     }
 
 
-
     /**
-     deleteData
+     * deleteData
      */
     public static void deleteData() {
         StaticsAgent.deleteData();

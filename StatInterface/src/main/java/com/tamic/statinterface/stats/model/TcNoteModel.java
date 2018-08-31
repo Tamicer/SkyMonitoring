@@ -1,6 +1,6 @@
 package com.tamic.statinterface.stats.model;
 
-import com.tamic.statinterface.stats.bean.TcNote;
+import com.tamic.statinterface.stats.bean.db.TcNote;
 import com.tamic.statinterface.stats.db.DbManager;
 import com.tamic.statinterface.stats.db.TcNoteDao;
 

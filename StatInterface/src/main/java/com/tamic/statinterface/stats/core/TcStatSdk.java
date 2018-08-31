@@ -19,6 +19,8 @@ package com.tamic.statinterface.stats.core;
 
 import android.content.Context;
 
+import com.tamic.statinterface.stats.bean.body.ViewPath;
+
 import java.util.HashMap;
 
 
@@ -125,9 +127,14 @@ public class TcStatSdk {
 
     }
 
-    protected void initEvent(String envntName) {
+    protected void initEvent(String envntName, String value) {
 
-        staticsManager.onInitEvent(envntName);
+        staticsManager.onInitEvent(envntName,value);
+
+    }
+    protected void initEvent(ViewPath viewPath) {
+
+        staticsManager.onInitEvent(viewPath);
 
     }
 

@@ -19,7 +19,7 @@ package com.tamic.statinterface.stats.core;
 
 import android.content.Context;
 
-import com.tamic.statinterface.stats.bean.DataBlock;
+import com.tamic.statinterface.stats.bean.body.DataBlock;
 import com.tamic.statinterface.stats.constants.NetConfig;
 import com.tamic.statinterface.stats.db.helper.StaticsAgent;
 import com.tamic.statinterface.stats.http.TcHttpClient;

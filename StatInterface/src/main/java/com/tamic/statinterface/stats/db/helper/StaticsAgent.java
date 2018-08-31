@@ -6,21 +6,17 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tamic.statinterface.stats.model.TcNoteModel;
-import com.tamic.statinterface.stats.bean.TcNote;
+import com.tamic.statinterface.stats.bean.body.AppAction;
+import com.tamic.statinterface.stats.bean.body.DataBlock;
+import com.tamic.statinterface.stats.bean.body.Event;
+import com.tamic.statinterface.stats.bean.body.ExceptionInfo;
+import com.tamic.statinterface.stats.bean.body.Page;
+import com.tamic.statinterface.stats.bean.db.TcNote;
 import com.tamic.statinterface.stats.db.DbManager;
-import com.tamic.statinterface.stats.bean.AppAction;
-import com.tamic.statinterface.stats.bean.DataBlock;
-import com.tamic.statinterface.stats.bean.Event;
-import com.tamic.statinterface.stats.bean.ExceptionInfo;
-import com.tamic.statinterface.stats.bean.Page;
-import com.tamic.statinterface.stats.util.JsonUtil;
+import com.tamic.statinterface.stats.model.TcNoteModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -86,39 +82,8 @@ public class StaticsAgent {
 
 
     public static DataBlock getDataBlock() {
-        DataBlock dataBlock = new DataBlock();
         List<TcNote> list = tcNoteDao.getTcNoteDao().loadAll();
-        AppAction appAction = new AppAction();
-        Page page = new Page();
-        Event event = new Event();
-        ExceptionInfo exceptionInfo = new ExceptionInfo();
-        List<AppAction> actionList = new ArrayList<>();
-        List<Page> pageList = new ArrayList<>();
-        List<Event> eventList = new ArrayList<>();
-        List<ExceptionInfo> exceptionInfos = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (!TextUtils.isEmpty(list.get(i).getFirstCloumn())) {
-                appAction = JsonUtil.parseObject(list.get(i).getFirstCloumn(), AppAction.class);
-                actionList.add(appAction);
-            }
-            if (!TextUtils.isEmpty(list.get(i).getSecondCloumn())) {
-                page = JsonUtil.parseObject(list.get(i).getSecondCloumn(), Page.class);
-                pageList.add(page);
-            }
-            if (!TextUtils.isEmpty(list.get(i).getThirdCloumn())) {
-                event = JsonUtil.parseObject(list.get(i).getThirdCloumn(), Event.class);
-                eventList.add(event);
-            }
-            if (!TextUtils.isEmpty(list.get(i).getFourCloumn())) {
-                exceptionInfo = JsonUtil.parseObject(list.get(i).getFourCloumn(), ExceptionInfo.class);
-                exceptionInfos.add(exceptionInfo);
-            }
-        }
-        dataBlock.setApp_action(actionList);
-        dataBlock.setPage(pageList);
-        dataBlock.setExceptionInfos(exceptionInfos);
-        dataBlock.setEvent(eventList);
-        return dataBlock;
+        return new DataBlock.Builder(list).build();
     }
 
     public static void storeData(String firstcloumn, String secondcloumn, String thirdcloumn) {
@@ -227,63 +192,17 @@ public class StaticsAgent {
                                 tcNoteDao.insertList(notesBuffer);
                                 notesBuffer.clear();
                             }
-                            DataBlock dataBlock = new DataBlock();
                             List<TcNote> list = tcNoteDao.getUnSendNotes();
-                            if (list != null) {
+                            if (list != null && list.size() > 0) {
                                 tcNoteDao.updateStatus(TcNote.DATA_STATUS_SAVED, TcNote.DATA_STATUS_SENDING);
-                            }
-
-                            AppAction action;
-                            Page page;
-                            Event event;
-                            ExceptionInfo exceptionInfo;
-                            List<AppAction> actionList = new ArrayList<>();
-                            List<Page> pageList = new ArrayList<>();
-                            List<Event> eventList = new ArrayList<>();
-                            List<ExceptionInfo> exceptionInfos = new ArrayList<>();
-                            for (int i = 0; list != null && i < list.size(); i++) {
-                                if (!TextUtils.isEmpty(list.get(i).getFirstCloumn())) {
-                                    action = JSON.parseObject(list.get(i).getFirstCloumn(), AppAction.class);
-                                    actionList.add(action);
+                                DataBlock dataBlock = new DataBlock.Builder(list).build();
+                                if (msg.obj != null && msg.obj instanceof Handler) {
+                                    Handler handler = (Handler) msg.obj;
+                                    Message msgBack = new Message();
+                                    msgBack.what = 0;
+                                    msgBack.obj = dataBlock;
+                                    handler.sendMessage(msgBack);
                                 }
-                                if (!TextUtils.isEmpty(list.get(i).getSecondCloumn())) {
-                                    page = JSON.parseObject(list.get(i).getSecondCloumn(), Page.class);
-                                    pageList.add(page);
-                                }
-                                if (!TextUtils.isEmpty(list.get(i).getThirdCloumn())) {
-                                    event = JSON.parseObject(list.get(i).getThirdCloumn(), Event.class);
-                                    eventList.add(event);
-                                }
-                                if (!TextUtils.isEmpty(list.get(i).getFourCloumn())) {
-                                    exceptionInfo = JSON.parseObject(list.get(i).getFourCloumn(), ExceptionInfo.class);
-                                    exceptionInfos.add(exceptionInfo);
-                                }
-                            }
-                            Collections.sort(pageList, new Comparator<Page>() {
-
-                                @Override
-                                public int compare(Page lhs, Page rhs) {
-                                    return lhs.getPage_start_time().compareTo(rhs.getPage_start_time());
-                                }
-                            });
-                            Collections.sort(eventList, new Comparator<Event>() {
-
-                                @Override
-                                public int compare(Event lhs, Event rhs) {
-                                    return lhs.getAction_time().compareTo(rhs.getAction_time());
-                                }
-                            });
-                            dataBlock.setApp_action(actionList);
-                            dataBlock.setPage(pageList);
-                            dataBlock.setEvent(eventList);
-                            dataBlock.setExceptionInfos(exceptionInfos);
-
-                            if (msg.obj != null && msg.obj instanceof Handler) {
-                                Handler handler = (Handler) msg.obj;
-                                Message msgBack = new Message();
-                                msgBack.what = 0;
-                                msgBack.obj = dataBlock;
-                                handler.sendMessage(msgBack);
                             }
 
                         }

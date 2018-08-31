@@ -42,11 +42,11 @@ public class TcHeadrHandle {
     private static String mChannel;
 
 
-    protected static boolean initHeader(Context context, int AppId, String channel) {
+    protected static boolean initHeader(Context context, int appid, String channel) {
 
 
         if (headerInfo == null) {
-            appId = AppId;
+            appId = appid;
             mChannel = channel;
             networkinfo = new NetworkInfo();
             headerInfo = new HeaderInfo(getAppInfo(context), getDeviceInfo(context), getNetWorkInfo(context));
@@ -83,29 +83,19 @@ public class TcHeadrHandle {
         if (appinfo != null) {
             return appinfo;
         }
-
         appinfo = new AppInfo();
+        appinfo.setAppId(String.valueOf(appId));
+        appinfo.setAppChannel(mChannel);
         PackageManager manager = context.getPackageManager();
-        PackageInfo info = null;
-        String appLabel = "";
-
         try {
-            info = manager.getPackageInfo(context.getPackageName(), 0);
-            appinfo.setApp_id(String.valueOf(appId));
-
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             if (info != null) {
-                appinfo.setApp_version(info.versionName);
+                appinfo.setAppVersion(info.versionName);
             }
-            appinfo.setApp_id(String.valueOf(appId));
-            appinfo.setChannel(mChannel);
-            appinfo.setSdk_version(DeviceUtil.getSdkCode());
-            appinfo.setSdk_verson_name(DeviceUtil.getSdkName());
-
-            return appinfo;
         } catch (PackageManager.NameNotFoundException e1) {
             e1.printStackTrace();
-            return null;
         }
+        return appinfo;
     }
 
     /**
@@ -114,27 +104,19 @@ public class TcHeadrHandle {
      * @param context
      */
     private static DeviceInfo getDeviceInfo(Context context) {
-
         if (deviceinfo != null) {
             return deviceinfo;
         }
         deviceinfo = new DeviceInfo();
         // AndroidId
-        deviceinfo.setDevice_id(DeviceUtil.getDeviceId(context));
-
-        deviceinfo.setMac(DeviceUtil.getMacAddress(context));
-
-        deviceinfo.setModel(Build.MODEL);
-
-        deviceinfo.setOs("Android");
-
-        deviceinfo.setOsVersion(Build.VERSION.RELEASE);
-
-        deviceinfo.setAppid("zuber");
-        deviceinfo.setResolution(DeviceUtil.getScreenWidth(context) + "*" + DeviceUtil.getScreenHeight(context));
-        deviceinfo.setDensity(String.valueOf(DeviceUtil.getScreenDensity(context)));
-        deviceinfo.setLocale(Locale.getDefault().getLanguage());
-
+        deviceinfo.setDeviceId(DeviceUtil.getDeviceId(context));
+        deviceinfo.setDeviceMacAddr(DeviceUtil.getMacAddress(context));
+        deviceinfo.setDeviceModel(Build.MODEL);
+        deviceinfo.setDevicePlatform("Android");
+        deviceinfo.setDeviceOsVersion(Build.VERSION.RELEASE);
+        deviceinfo.setDeviceScreen(DeviceUtil.getScreenWidth(context) + "*" + DeviceUtil.getScreenHeight(context));
+        deviceinfo.setDeviceDensity(String.valueOf(DeviceUtil.getScreenDensity(context)));
+        deviceinfo.setDeviceLocale(Locale.getDefault().getLanguage());
         return deviceinfo;
 
     }
@@ -150,52 +132,12 @@ public class TcHeadrHandle {
 
             networkinfo = new NetworkInfo();
         }
-        networkinfo.setIp_addr(NetworkUtil.getLocalIpAddress());
+        networkinfo.setIpAddr(NetworkUtil.getLocalIpAddress());
 
         networkinfo.setWifi(NetworkUtil.isWifi(context));
 
         return networkinfo;
     }
 
-    /**
-     * 获取Location
-     *
-     * @param context
-     * @return
-     */
-    private static Location getLocation(Context context) {
-        //获取地理位置管理器
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-        List<String> providers = locationManager.getProviders(true);
-        String locationProvider;
-        if (providers.contains(LocationManager.GPS_PROVIDER)) {
-            //如果是GPS
-            locationProvider = LocationManager.GPS_PROVIDER;
-        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
-            //如果是Network
-            locationProvider = LocationManager.NETWORK_PROVIDER;
-        } else {
-
-            locationProvider = LocationManager.GPS_PROVIDER;
-
-        }
-
-        if (Build.VERSION.SDK_INT > 23) {
-            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return locationManager.getLastKnownLocation(locationProvider);
-            }
-        }
-
-        return locationManager.getLastKnownLocation(locationProvider);
-    }
 
 }
