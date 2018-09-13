@@ -8,15 +8,14 @@
 
     <Button
         android:id="@+id/id_button"
-        android:text="test"
+        android:text="测试v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
     <Button
         android:id="@+id/id_button2"
-
-        android:text="next"
+        android:text="下一步"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

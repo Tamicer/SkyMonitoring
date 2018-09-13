@@ -25,17 +25,9 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     public void onClick(View v) {
-        HashMap hashMap = new HashMap<String, String>();
-        hashMap.put("onclick", v.toString());
-        TcStatInterface.onEvent("second Activity", hashMap);
 
     }
 }
